@@ -156,7 +156,7 @@ export default function Home() {
                   className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
                 >
                   <option>العربية الفصحى</option>
-                  <option>الدارجة الحزائرية</option>
+                  <option>الدارجة </option>
                   <option>اللهجة المصرية</option>
                   <option>English</option>
                 </select>
