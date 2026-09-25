@@ -1,52 +1,22 @@
 import Layout from '../../components/Layout';
 import Link from 'next/link';
-import Image from 'next/image';
-
-const articles = [
-  {
-    slug: 'how-to-increase-facebook-engagement',
-    title: 'كيف تزيد تفاعل صفحتك على فيسبوك في 2026؟',
-    excerpt: 'اكتشف أفضل الاستراتيجيات المجرّبة لزيادة تفاعل منشوراتك على فيسبوك، من أوقات النشر إلى صياغة الأسئلة التفاعلية.',
-    date: '2026-09-20',
-    image: '/images/blog-engagement.jpg',
-    category: 'تسويق',
-    readTime: '5 دقائق',
-  },
-  {
-    slug: 'best-times-to-post-on-facebook',
-    title: 'أفضل أوقات النشر على فيسبوك حسب المنطقة العربية',
-    excerpt: 'دليل شامل لأفضل أوقات النشر على فيسبوك في مصر، السعودية، المغرب، والجزائر.',
-    date: '2026-09-15',
-    image: '/images/blog-timing.jpg',
-    category: 'نصائح',
-    readTime: '7 دقائق',
-  },
-  {
-    slug: 'ai-content-creation-tips',
-    title: '5 نصائح لاستخدام الذكاء الاصطناعي في إنشاء المحتوى',
-    excerpt: 'كيف تستفيد من أدوات AI لإنشاء محتوى تفاعلي دون أن يفقد شخصيته؟',
-    date: '2026-09-10',
-    image: '/images/blog-ai.jpg',
-    category: 'ذكاء اصطناعي',
-    readTime: '6 دقائق',
-  },
-];
+import { blogArticlesList } from '../../lib/blogData';
 
 export default function BlogIndex() {
   return (
     <Layout title="المدونة" description="مقالات ونصائح حول التسويق عبر فيسبوك والذكاء الاصطناعي">
-      <div className="max-w-5xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="text-center mb-12">
           <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-3">📚 المدونة</h1>
           <p className="text-gray-600 max-w-2xl mx-auto">
-            مقالات ونصائح لمساعدتك في التسويق عبر السوشيال ميديا وزيادة التفاعل.
+            {blogArticlesList.length} مقال لمساعدتك في التسويق عبر السوشيال ميديا وزيادة التفاعل.
           </p>
         </div>
 
         {/* Articles Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {articles.map((article) => (
+          {blogArticlesList.map((article) => (
             <Link
               key={article.slug}
               href={`/blog/${article.slug}`}
