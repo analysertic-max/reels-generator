@@ -1,87 +1,53 @@
-import { useState } from 'react';
+import Link from 'next/link';
 import Layout from '../components/Layout';
-import PostCard from '../components/PostCard';
-import FeatureCard from '../components/FeatureCard';
+import { blogArticlesList } from '../lib/blogData';
 
 export default function Home() {
-  const [url, setUrl] = useState('');
-  const [reelData, setReelData] = useState(null);
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [step, setStep] = useState('');
-  const [error, setError] = useState('');
+  const latestArticles = blogArticlesList.slice(0, 3);
 
-  const [options, setOptions] = useState({
-    language: 'العربية الفصحى',
-    tone: 'ودي وتفاعلي',
-    count: 5,
-  });
-
-  const handleExtract = async () => {
-    if (!url) return;
-    setLoading(true);
-    setError('');
-    setStep('جاري استخراج بيانات الريل...');
-
-    try {
-      const res = await fetch('/api/extract', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url }),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        setReelData(data.data);
-        setStep('تم الاستخراج ✅ عدّل البيانات إن أردت');
-      } else {
-        setError(data.error);
-      }
-    } catch (err) {
-      setError('فشل الاتصال بالخادم');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const handleGenerate = async () => {
-    if (!reelData) return;
-    setLoading(true);
-    setError('');
-    setStep('جاري توليد المنشورات بالذكاء الاصطناعي...');
-    setPosts([]);
-
-    try {
-      const res = await fetch('/api/generate', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ reelData, options }),
-      });
-      const data = await res.json();
-
-      if (data.success) {
-        setPosts(data.posts);
-        setStep(`تم توليد ${data.posts.length} منشورات ✅`);
-      } else {
-        setError(data.error);
-      }
-    } catch (err) {
-      setError('فشل في التوليد');
-    } finally {
-      setLoading(false);
-    }
-  };
+  const tools = [
+    {
+      icon: '🎬',
+      title: 'مولد منشورات من Reels',
+      description: 'حوّل أي Reel إلى منشورات تفاعلية جاهزة للنشر في مجموعات فيسبوك.',
+      href: '/tools/reels-generator',
+      color: 'from-indigo-500 to-purple-600',
+      badge: 'متاح',
+      badgeColor: 'from-green-400 to-emerald-500',
+    },
+    
+    {
+      icon: '✍️',
+      title: 'كاتب المحتوى',
+      description: 'توليد نصوص ومقالات احترافية بالذكاء الاصطناعي في ثوانٍ.',
+      href: '#',
+      color: 'from-emerald-500 to-teal-600',
+      badge: 'قريباً',
+      badgeColor: 'from-amber-400 to-orange-500',
+    },
+    {
+      icon: '📊',
+      title: 'محلل الهاشتاغات',
+      description: 'اختر أفضل الهاشتاغات لمنشوراتك بناءً على تحليل ذكي.',
+      href: '#',
+      color: 'from-amber-500 to-orange-600',
+      badge: 'قريباً',
+      badgeColor: 'from-amber-400 to-orange-500',
+    },
+  ];
 
   return (
-    <Layout>
-      <div className="max-w-6xl mx-auto px-4 py-8">
+    <Layout
+      title="آخر الأخبار + أدوات ذكية"
+      description="نبض التقنية - آخر أخبار التكنولوجيا والذكاء الاصطناعي + أدوات ذكية مجانية لإنشاء المحتوى العربي"
+    >
+      <div className="max-w-7xl mx-auto px-4 py-8">
 
         {/* ===== Hero Section ===== */}
         <section className="relative mb-12 rounded-3xl overflow-hidden shadow-2xl min-h-[500px] md:min-h-[600px]">
-          {/* صورة الخلفية */}
           <img
             src="/images/hero.jpg"
-            alt="خلفية Reels Generator"
+            alt="نبض التقنية"
             className="absolute inset-0 w-full h-full object-cover"
             loading="eager"
             onError={(e) => {
@@ -90,43 +56,53 @@ export default function Home() {
             }}
           />
 
-          {/* طبقة داكنة لتحسين قراءة النص */}
           <div
             className="absolute inset-0"
             style={{
-              background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.85) 0%, rgba(88, 28, 135, 0.80) 50%, rgba(131, 24, 67, 0.85) 100%)'
+              background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.88) 0%, rgba(88, 28, 135, 0.82) 50%, rgba(131, 24, 67, 0.88) 100%)'
             }}
           ></div>
 
-          {/* زخارف دائرية */}
           <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full filter blur-3xl"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
 
-          {/* المحتوى */}
           <div className="relative h-full flex items-center justify-center px-6 py-16 md:py-24">
             <div className="text-center text-white max-w-4xl mx-auto">
 
-              {/* شارة */}
-              <div className="inline-block bg-white/20 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-8 border border-white/40 shadow-lg">
-                ✨  عالم التقنية بين يديك
+              {/* الشعار */}
+              <div className="inline-block bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-base font-bold mb-8 border border-white/40 shadow-lg">
+                📰 نبض التقنية
               </div>
 
-              {/* العنوان */}
+              {/* العنوان الرئيسي */}
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight drop-shadow-2xl">
-                🎬 مولد منشورات من Reels
+                كل ما يخص التقنية في مكان واحد
               </h1>
 
               {/* الوصف */}
               <p className="text-lg md:text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed mb-10 font-medium drop-shadow-lg">
-                حوّل أي Reel إلى{' '}
-                <strong className="text-yellow-300 font-black">منشورات تفاعلية جاهزة</strong>{' '}
-                للنشر في مجموعات فيسبوك مع صور احترافية بنص عربي جميل.
+                تابع آخر أخبار التكنولوجيا والذكاء الاصطناعي
+                <br />
+                واستخدم أدواتنا المجانية لإنشاء محتوى احترافي
               </p>
 
               {/* الأزرار */}
               <div className="flex flex-wrap gap-4 justify-center mb-10">
-                <a
-                  href="#start"
+                <Link
+                  href="/blog"
+                  className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
+                  style={{
+                    background: 'linear-gradient(135deg, #10b981, #059669)',
+                    color: '#ffffff',
+                    boxShadow: '0 15px 40px rgba(16, 185, 129, 0.6)',
+                  }}
+                >
+                  <span>📰</span>
+                  <span>تصفح الأخبار</span>
+                </Link>
+
+                <Link
+                  href="/tools"
                   className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
                   style={{
                     background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
@@ -134,17 +110,9 @@ export default function Home() {
                     boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
                   }}
                 >
-                  <span>🚀</span>
-                  <span>ابدأ الآن مجاناً</span>
-                </a>
-
-                <a
-                  href="/blog"
-                  className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-lg border-2 border-white bg-white/10 backdrop-blur-md hover:bg-white/20 hover:scale-105 transition-all duration-300 text-white"
-                >
-                  <span>📚</span>
-                  <span>اقرأ المدونة</span>
-                </a>
+                  <span>🛠️</span>
+                  <span>جرّب الأدوات</span>
+                </Link>
               </div>
 
               {/* مؤشرات الثقة */}
@@ -159,7 +127,7 @@ export default function Home() {
                 </div>
                 <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
                   <span className="text-green-400 text-lg">✓</span>
-                  <span>يدعم العربية</span>
+                  <span>محتوى عربي</span>
                 </div>
               </div>
 
@@ -167,236 +135,275 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ===== Features Cards ===== */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-          <FeatureCard
-            icon="⚡"
-            title="سريع جداً"
-            description="منشورات جاهزة في ثوانٍ بضغطة زر، دون انتظار."
-            image="/images/feature-1.jpg"
-            gradient="bg-gradient-to-br from-indigo-500 to-blue-600"
-          />
-          <FeatureCard
-            icon="🎨"
-            title="صور احترافية"
-            description="6 أنماط مختلفة للصور مع نص عربي بخط جميل."
-            image="/images/feature-2.jpg"
-            gradient="bg-gradient-to-br from-purple-500 to-pink-600"
-          />
-          <FeatureCard
-            icon="🌍"
-            title="يدعم العربية"
-            description="نصوص عربية واضحة بخط Cairo الجميل على الصور."
-            image="/images/feature-3.jpg"
-            gradient="bg-gradient-to-br from-pink-500 to-orange-500"
-          />
-        </section>
-
-        {/* ===== AdSense Banner ===== */}
-        <div className="mb-8 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
+        {/* ===== AdSense Banner Top ===== */}
+        <div className="mb-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
 
-        {/* ===== Input Section ===== */}
-        <section id="start" className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 border border-gray-100">
-          <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
-            <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-            📝 ابدأ الآن
-          </h2>
-
-          <label className="block text-sm font-semibold text-gray-700 mb-2">
-            رابط الريل
-          </label>
-          <div className="flex flex-col sm:flex-row gap-2">
-            <input
-              type="text"
-              value={url}
-              onChange={(e) => setUrl(e.target.value)}
-              placeholder="https://www.facebook.com/reel/..."
-              className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-            />
-            <button
-              onClick={handleExtract}
-              disabled={loading || !url}
-              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold disabled:opacity-50 transition shadow-md hover:shadow-lg"
+        {/* ===== قسم الأخبار ===== */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-800">
+                📰 آخر الأخبار
+              </h2>
+            </div>
+            <Link
+              href="/blog"
+              className="text-indigo-600 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all"
             >
-              استخراج
-            </button>
+              <span>عرض الكل</span>
+              <span>←</span>
+            </Link>
           </div>
-          <p className="text-xs text-gray-500 mt-3">
-            💡 إن لم يعمل الاستخراج، يمكنك كتابة الوصف يدوياً في الخطوة التالية.
-          </p>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {latestArticles.map((article) => (
+              <Link
+                key={article.slug}
+                href={`/blog/${article.slug}`}
+                className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2 flex flex-col"
+              >
+                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
+                  <img
+                    src={article.image}
+                    alt={article.title}
+                    className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                  <span className="absolute top-3 right-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                    {article.category}
+                  </span>
+                  <span className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
+                    ⏱️ {article.readTime}
+                  </span>
+                </div>
+
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition line-clamp-2 leading-snug min-h-[56px]">
+                    {article.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-1">
+                    {article.excerpt}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-400 border-t pt-3">
+                    <span className="flex items-center gap-1">📅 {article.date}</span>
+                    <span className="flex items-center gap-1 text-indigo-600 font-bold">
+                      اقرأ المزيد ←
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </section>
 
-        {/* ===== Reel Data Section ===== */}
-        {reelData && (
-          <section className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 border border-gray-100">
-            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
-              <span className="w-1 h-5 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-              📄 بيانات الريل
-            </h2>
+        {/* ===== AdSense Banner Middle ===== */}
+        <div className="mb-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
+          <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
+        </div>
 
-            <div className="space-y-3">
-              <div>
-                <label className="text-sm font-medium text-gray-600">العنوان</label>
-                <input
-                  type="text"
-                  value={reelData.title}
-                  onChange={(e) => setReelData({ ...reelData, title: e.target.value })}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">الوصف</label>
-                <textarea
-                  value={reelData.description}
-                  onChange={(e) => setReelData({ ...reelData, description: e.target.value })}
-                  rows={3}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-                />
-              </div>
+        {/* ===== قسم الأدوات ===== */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-8">
+            <div className="flex items-center gap-3">
+              <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-purple-600 rounded-full"></span>
+              <h2 className="text-3xl md:text-4xl font-black text-gray-800">
+                🛠️ أدواتنا الذكية
+              </h2>
             </div>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
-              <div>
-                <label className="text-sm font-medium text-gray-600">اللغة</label>
-                <select
-                  value={options.language}
-                  onChange={(e) => setOptions({ ...options, language: e.target.value })}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option>العربية الفصحى</option>
-                  <option>الدارجة المغاربية</option>
-                  <option>اللهجة المصرية</option>
-                  <option>English</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">النبرة</label>
-                <select
-                  value={options.tone}
-                  onChange={(e) => setOptions({ ...options, tone: e.target.value })}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option>ودي وتفاعلي</option>
-                  <option>احترافي ورسمي</option>
-                  <option>مضحك وخفيف</option>
-                  <option>تحفيزي</option>
-                </select>
-              </div>
-
-              <div>
-                <label className="text-sm font-medium text-gray-600">عدد المنشورات</label>
-                <select
-                  value={options.count}
-                  onChange={(e) => setOptions({ ...options, count: parseInt(e.target.value) })}
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
-                >
-                  <option value={3}>3</option>
-                  <option value={5}>5</option>
-                  <option value={7}>7</option>
-                  <option value={10}>10</option>
-                </select>
-              </div>
-            </div>
-
-            <button
-              onClick={handleGenerate}
-              disabled={loading}
-              className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 rounded-xl font-bold text-lg disabled:opacity-50 transition shadow-lg hover:shadow-xl"
+            <Link
+              href="/tools"
+              className="text-pink-600 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all"
             >
-              {loading ? '⏳ جاري التوليد...' : '✨ ولّد المنشورات'}
-            </button>
-          </section>
-        )}
-
-        {/* ===== Status ===== */}
-        {step && (
-          <div className="text-center text-gray-700 mb-4 font-medium bg-white/60 backdrop-blur-sm rounded-xl py-3 px-4 shadow-sm">
-            {step}
+              <span>كل الأدوات</span>
+              <span>←</span>
+            </Link>
           </div>
-        )}
-        {error && (
-          <div className="bg-red-50 border-r-4 border-red-500 text-red-700 p-4 rounded-xl mb-4 shadow-sm">
-            ⚠️ {error}
-          </div>
-        )}
 
-        {/* ===== Results ===== */}
-        {posts.length > 0 && (
-          <section>
-            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
-              <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-              ✅ المنشورات الجاهزة ({posts.length})
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            {tools.map((tool) => (
+              <Link
+                key={tool.title}
+                href={tool.href}
+                className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2 flex flex-col"
+              >
+                {tool.badge && (
+                  <span className={`absolute top-3 left-3 z-10 bg-gradient-to-r ${tool.badgeColor} text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md`}>
+                    {tool.badge}
+                  </span>
+                )}
+
+                <div className={`relative h-40 bg-gradient-to-br ${tool.color} flex items-center justify-center overflow-hidden`}>
+                  <div className="absolute inset-0 opacity-20">
+                    <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full filter blur-2xl"></div>
+                  </div>
+                  <span className="relative text-7xl drop-shadow-2xl group-hover:scale-125 transition-transform duration-500">
+                    {tool.icon}
+                  </span>
+                </div>
+
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition">
+                    {tool.title}
+                  </h3>
+                  <p className="text-gray-600 text-sm leading-relaxed flex-1">
+                    {tool.description}
+                  </p>
+                  <div className="mt-4 flex items-center text-indigo-600 font-bold text-sm">
+                    <span>استخدم الآن</span>
+                    <span className="mr-1 group-hover:translate-x-[-4px] transition-transform">←</span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+
+        {/* ===== AdSense Banner ===== */}
+        <div className="mb-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
+          <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
+        </div>
+
+        {/* ===== قسم لماذا نحن ===== */}
+        <section className="mb-16">
+          <div className="text-center mb-10">
+            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-3">
+              ✨ لماذا نبض التقنية؟
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-              {posts.map((post, i) => (
-                <PostCard key={i} post={post} index={i} />
-              ))}
+            <p className="text-gray-600 max-w-2xl mx-auto">
+              منصة عربية شاملة تجمع الأخبار والأدوات في مكان واحد
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
+              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+                ✅
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">
+                محتوى عربي 100%
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                مقالات وأدوات مصممة خصيصاً للمحتوى العربي بجودة عالية.
+              </p>
             </div>
-          </section>
-        )}
 
-        {/* ===== SEO Content Section ===== */}
-        <section className="mt-16 bg-white rounded-2xl shadow-lg p-8 md:p-10 border border-gray-100">
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
-            <span className="w-1 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-            كيف يساعدك Reels Generator في زيادة تفاعلك؟
-          </h2>
-          <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4">
-            <p>
-              <strong>Reels Generator</strong> هو أداة مجانية متطورة تستخدم أحدث تقنيات الذكاء الاصطناعي
-              لتحويل مقاطع الفيديو القصيرة (Reels) إلى منشورات نصية تفاعلية جاهزة للنشر في مجموعات فيسبوك،
-              صفحاتك الشخصية، أو أي منصة تواصل اجتماعي أخرى.
-            </p>
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
+              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+                🆓
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">
+                أدوات مجانية بدون تسجيل
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                استخدم كل الأدوات مجاناً، بدون حساب ولا بطاقة بنكية.
+              </p>
+            </div>
 
-            <h3 className="text-xl font-bold text-gray-800 mt-6">لماذا تحتاج هذه الأداة؟</h3>
-            <p>
-              يعاني الكثير من أصحاب الصفحات والمجموعات من صعوبة كتابة محتوى تفاعلي يومياً.
-              مع <strong>Reels Generator</strong>، لا تحتاج لخبرة في كتابة الكوبي أو التسويق.
-              ما عليك سوى وضع رابط الريل، وستحصل على 5-10 منشورات مختلفة جاهزة للنشر مباشرة.
-            </p>
-
-            <h3 className="text-xl font-bold text-gray-800 mt-6">مميزات الأداة</h3>
-            <ul className="list-disc mr-6 space-y-2">
-              <li><strong>توليد منشورات متعددة:</strong> 3-10 نسخ بأسلوب مختلف لكل ريل.</li>
-              <li><strong>أنماط صور متنوعة:</strong> واقعي، فني، إسلامي، كرتوني، بسيط، وتحفيزي.</li>
-              <li><strong>دعم كامل للعربية:</strong> نصوص بخط Cairo الجميل فوق الصور.</li>
-              <li><strong>نبرات متعددة:</strong> رسمي، فكاهي، تحفيزي، أو ودي.</li>
-              <li><strong>تحميل مباشر:</strong> احفظ الصور والمنشورات بضغطة زر.</li>
-              <li><strong>مجاني 100%:</strong> بدون تسجيل، بدون بطاقة بنكية.</li>
-            </ul>
-
-            <h3 className="text-xl font-bold text-gray-800 mt-6">كيف تستخدم الأداة؟</h3>
-            <ol className="list-decimal mr-6 space-y-2">
-              <li>انسخ رابط الريل من فيسبوك أو انستغرام.</li>
-              <li>الصقه في الأداة واضغط "استخراج".</li>
-              <li>اختر اللغة، النبرة، وعدد المنشورات.</li>
-              <li>اضغط "ولّد المنشورات" وانتظر ثوانٍ.</li>
-              <li>اختر الصور (نمط + نص عربي) وانشر!</li>
-            </ol>
-
-            <h3 className="text-xl font-bold text-gray-800 mt-6">نصائح لزيادة التفاعل</h3>
-            <p>
-              للحصول على أفضل نتائج، انشر منشوراتك في <strong>أوقات الذروة</strong> (8-10 مساءً بتوقيت جمهورك)،
-              واستخدم <strong>صوراً جذابة</strong>، وأضف <strong>سؤالاً تفاعلياً</strong> في نهاية كل منشور.
-              جرب أيضاً استخدام أكثر من نمط صورة لترى أيهم يحصل على تفاعل أعلى.
-            </p>
-
-            <h3 className="text-xl font-bold text-gray-800 mt-6">هل الأداة مجانية فعلاً؟</h3>
-            <p>
-              نعم! الأداة مجانية بالكامل. نحن نعتمد على إعلانات Google AdSense لتغطية تكاليف التشغيل
-              واستخدام الذكاء الاصطناعي. إذا أعجبتك الأداة، ادعمنا بمشاركتها مع أصدقائك.
-            </p>
+            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
+              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+                🔄
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 mb-3">
+                تحديث يومي
+              </h3>
+              <p className="text-gray-600 leading-relaxed text-sm">
+                محتوى جديد وأخبار محدّثة يومياً لتبقى على اطلاع دائم.
+              </p>
+            </div>
           </div>
         </section>
 
         {/* ===== AdSense Banner Bottom ===== */}
-        <div className="my-8 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
+        <div className="my-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
+
+        {/* ===== CTA النهائي ===== */}
+        
+<section className="relative rounded-3xl overflow-hidden shadow-2xl mb-12 min-h-[350px]">
+
+  {/* صورة الخلفية */}
+  <img
+    src="/images/cta.jpg"
+    alt="ابدأ رحلتك التقنية"
+    className="absolute inset-0 w-full h-full object-cover"
+    loading="lazy"
+    onError={(e) => {
+      e.target.style.display = 'none';
+      e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 50%)';
+    }}
+  />
+
+  {/* طبقة داكنة متعددة الألوان */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background: `
+        radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.6) 0%, transparent 50%),
+        radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.5) 0%, transparent 50%),
+        linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(49, 46, 129, 0.88) 50%, rgba(88, 28, 135, 0.92) 100%)
+      `
+    }}
+  ></div>
+
+  {/* شبكة نقاط خفيفة */}
+  <div
+    className="absolute inset-0 opacity-15"
+    style={{
+      backgroundImage: 'radial-gradient(rgba(255,255,255,0.6) 1px, transparent 1px)',
+      backgroundSize: '30px 30px'
+    }}
+  ></div>
+
+  {/* توهجات */}
+  <div className="absolute top-0 right-0 w-96 h-96 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+  <div className="absolute bottom-0 left-0 w-96 h-96 bg-pink-400/20 rounded-full filter blur-3xl"></div>
+
+  {/* المحتوى */}
+  <div className="relative px-8 py-16 text-center text-white">
+    <div className="text-6xl mb-4 drop-shadow-2xl">🚀</div>
+
+    <h3 className="text-3xl md:text-4xl font-black mb-4 drop-shadow-lg">
+      ابدأ رحلتك التقنية الآن
+    </h3>
+
+    <p className="text-white/95 text-lg mb-8 max-w-xl mx-auto drop-shadow-lg">
+      تصفح الأخبار، جرّب الأدوات، وطوّر مهاراتك التقنية مع نبض التقنية.
+    </p>
+
+    <div className="flex flex-wrap gap-4 justify-center">
+      <Link
+        href="/blog"
+        className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
+        style={{
+          background: 'linear-gradient(135deg, #10b981, #059669)',
+          color: '#ffffff',
+          boxShadow: '0 15px 40px rgba(16, 185, 129, 0.6)',
+        }}
+      >
+        <span>📰</span>
+        <span>تصفح الأخبار</span>
+      </Link>
+
+      <Link
+        href="/tools"
+        className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
+        style={{
+          background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+          color: '#1f2937',
+          boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
+        }}
+      >
+        <span>🛠️</span>
+        <span>جرّب الأدوات</span>
+      </Link>
+    </div>
+  </div>
+</section>
 
       </div>
     </Layout>

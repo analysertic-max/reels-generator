@@ -44,12 +44,12 @@ export default function BlogIndex() {
 
               {/* العنوان */}
               <h1 className="text-4xl md:text-6xl font-black mb-6 drop-shadow-2xl leading-tight">
-                📖 مدونة Reels Generator
+                📖  مدونة نبض التقنية 
               </h1>
 
               {/* الوصف */}
               <p className="text-lg md:text-xl text-white/95 max-w-2xl mx-auto leading-relaxed font-medium drop-shadow-lg mb-8">
-                مقالات ونصائح لمساعدتك في التسويق عبر السوشيال ميديا وزيادة التفاعل والمتابعين.
+                آخر أخبار التكنولوجيا والذكاء الاصطناعي، وأدوات صناعة المحتوى، وكل ما يهم المبدع العربي في مكان واحد.
               </p>
 
               {/* مؤشرات */}

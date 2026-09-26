@@ -6,14 +6,14 @@ import Logo from './Logo';
 
 export default function Layout({
   children,
-  title = 'مولد منشورات من Reels',
-  description = 'حوّل أي Reel إلى منشورات جاهزة للنشر في مجموعات فيسبوك بالذكاء الاصطناعي',
+  title = 'نبض التقنية',
+  description = 'آخر الأخبار + أدوات ذكية في منصة واحدة',
 }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const router = useRouter();
 
-  const fullTitle = `${title} | Reels Generator`;
+  const fullTitle = `${title} | نبض التقنية`;
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -23,9 +23,10 @@ export default function Layout({
 
   const navLinks = [
     { href: '/', label: 'الرئيسية', icon: '🏠' },
-    { href: '/blog', label: 'المدونة', icon: '📚' },
+    { href: '/blog', label: 'الأخبار', icon: '📰' },
+    { href: '/tools', label: 'الأدوات', icon: '🛠️' },
     { href: '/about', label: 'من نحن', icon: 'ℹ️' },
-    { href: '/contact', label: 'اتصل بنا', icon: '📧' },
+    { href: '/contact', label: 'تواصل معنا', icon: '📧' },
   ];
 
   const isActive = (href) => router.pathname === href;
@@ -36,7 +37,7 @@ export default function Layout({
         <title>{fullTitle}</title>
         <meta name="description" content={description} />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <meta name="author" content="Reels Generator" />
+        <meta name="author" content="نبض التقنية" />
         <meta property="og:title" content={fullTitle} />
         <meta property="og:description" content={description} />
         <meta property="og:type" content="website" />
@@ -50,16 +51,13 @@ export default function Layout({
           scrolled ? 'shadow-xl py-2' : 'shadow-lg py-3'
         }`}
       >
-        {/* الخلفية المتدرجة */}
         <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-
-        {/* طبقة شفافة عند التمرير */}
         {scrolled && (
           <div className="absolute inset-0 bg-black/20 backdrop-blur-md"></div>
         )}
 
         <div className="relative max-w-7xl mx-auto px-4 flex items-center justify-between">
-          <Logo size="md" />
+          <Logo size="md" variant="light" />
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center gap-1">
@@ -67,7 +65,7 @@ export default function Layout({
               <Link
                 key={link.href}
                 href={link.href}
-                className={`px-4 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
+                className={`px-3 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
                   isActive(link.href)
                     ? 'bg-white text-indigo-700 shadow-md'
                     : 'text-white hover:bg-white/20'
@@ -82,10 +80,10 @@ export default function Layout({
           {/* CTA Button */}
           <div className="hidden md:block">
             <Link
-              href="/"
+              href="/tools"
               className="bg-white text-indigo-700 px-5 py-2 rounded-full text-sm font-bold hover:shadow-lg hover:scale-105 transition-all duration-200"
             >
-              ✨ ابدأ الآن
+              ✨ جرّب الأدوات
             </Link>
           </div>
 
@@ -136,10 +134,8 @@ export default function Layout({
         </div>
       </header>
 
-      {/* Spacer for fixed header */}
       <div className="h-20" />
 
-      {/* Main Content */}
       <main className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30">
         {children}
       </main>
@@ -153,54 +149,67 @@ export default function Layout({
 
         <div className="relative max-w-7xl mx-auto px-4 py-12">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            {/* About */}
             <div className="md:col-span-1">
               <div className="flex items-center gap-2 mb-4">
                 <svg width="40" height="40" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg">
                   <defs>
-                    <linearGradient id="footerLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <linearGradient id="footerPulse" x1="0%" y1="0%" x2="100%" y2="100%">
                       <stop offset="0%" stopColor="#818cf8" />
-                      <stop offset="50%" stopColor="#66b8d1" />
-                      <stop offset="100%" stopColor="#72cbf4" />
+                      <stop offset="50%" stopColor="#a78bfa" />
+                      <stop offset="100%" stopColor="#f472b6" />
                     </linearGradient>
                   </defs>
-                  <circle cx="30" cy="30" r="28" fill="url(#footerLogoGrad)" />
-                  <path d="M 22 18 L 22 42 L 42 30 Z" fill="white" />
+                  <circle cx="30" cy="30" r="28" fill="url(#footerPulse)" />
+                  <path
+                    d="M 14 30 L 20 30 L 24 22 L 28 38 L 32 26 L 36 34 L 40 30 L 46 30"
+                    stroke="white"
+                    strokeWidth="2.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    fill="none"
+                  />
                 </svg>
                 <div>
-                  <div className="font-extrabold text-white leading-none">Reels</div>
+                  <div className="font-extrabold text-white leading-none">نبض</div>
                   <div className="font-extrabold bg-gradient-to-r from-indigo-300 to-pink-300 bg-clip-text text-transparent leading-none">
-                    Generator
+                    التقنية
                   </div>
                 </div>
               </div>
               <p className="text-sm leading-relaxed text-gray-400">
-                أداة ذكية لتحويل فيديوهات Reels إلى منشورات تفاعلية جاهزة للنشر،
-                باستخدام أحدث تقنيات الذكاء الاصطناعي.
+                آخر الأخبار التقنية + أدوات ذكية مجانية في منصة عربية واحدة.
               </p>
             </div>
 
-            {/* Quick Links */}
             <div>
               <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                 <span className="w-1 h-5 bg-gradient-to-b from-indigo-400 to-purple-400 rounded-full"></span>
                 روابط سريعة
               </h3>
               <ul className="space-y-2 text-sm">
-                {navLinks.map((link) => (
-                  <li key={link.href}>
-                    <Link
-                      href={link.href}
-                      className="text-gray-400 hover:text-white transition inline-flex items-center gap-2"
-                    >
-                      <span className="text-xs">→</span> {link.label}
-                    </Link>
-                  </li>
-                ))}
+                <li>
+                  <Link href="/" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                    <span className="text-xs">→</span> الرئيسية
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/blog" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                    <span className="text-xs">→</span> الأخبار
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/tools" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                    <span className="text-xs">→</span> الأدوات
+                  </Link>
+                </li>
+                <li>
+                  <Link href="/about" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                    <span className="text-xs">→</span> من نحن
+                  </Link>
+                </li>
               </ul>
             </div>
 
-            {/* Legal */}
             <div>
               <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                 <span className="w-1 h-5 bg-gradient-to-b from-indigo-400 to-purple-400 rounded-full"></span>
@@ -225,7 +234,6 @@ export default function Layout({
               </ul>
             </div>
 
-            {/* Contact */}
             <div>
               <h3 className="text-white font-bold mb-4 flex items-center gap-2">
                 <span className="w-1 h-5 bg-gradient-to-b from-indigo-400 to-purple-400 rounded-full"></span>
@@ -233,7 +241,7 @@ export default function Layout({
               </h3>
               <ul className="space-y-3 text-sm">
                 <li className="flex items-center gap-2 text-gray-400">
-                  <span>📧</span> contact@reels-generator.app
+                  <span>📧</span> contact@nabd-tech.app
                 </li>
                 <li className="flex items-center gap-2 text-gray-400">
                   <span>💬</span> دعم فني 24/7
@@ -254,7 +262,7 @@ export default function Layout({
           </div>
 
           <div className="border-t border-white/10 mt-8 pt-6 text-center text-sm text-gray-400">
-            <p>© {new Date().getFullYear()} Reels Generator. جميع الحقوق محفوظة. صُنع بـ ❤️ للمحتوى العربي.</p>
+            <p>© {new Date().getFullYear()} نبض التقنية. جميع الحقوق محفوظة. صُنع بـ ❤️ للمحتوى العربي.</p>
           </div>
         </div>
       </footer>
