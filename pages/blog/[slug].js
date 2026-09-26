@@ -2,6 +2,8 @@ import Layout from '../../components/Layout';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { blogArticles, blogArticlesList } from '../../lib/blogData';
+import Comments from '../../components/Comments';
+
 
 export default function ArticlePage() {
   const router = useRouter();
@@ -167,6 +169,8 @@ export default function ArticlePage() {
 </div>
           </div>
         </article>
+        {/* ===== Comments ===== */}
+<Comments title={article.title} identifier={article.slug} />
 
         {/* ===== Related ===== */}
         <section className="mt-12">

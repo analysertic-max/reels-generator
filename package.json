@@ -12,6 +12,7 @@
     "@huggingface/inference": "^4.13.30",
     "axios": "^1.20.0",
     "cheerio": "^1.2.0",
+    "disqus-react": "^1.1.7",
     "next": "16.3.6",
     "openai": "^7.23.0",
     "react": "19.2.8",
