@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 60" width="200" height="60">
+  <defs>
+    <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#8b5cf6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#ec4899;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="playGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e0e7ff;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- أيقونة الفيديو الدائرية -->
+  <circle cx="30" cy="30" r="26" fill="url(#logoGrad)" />
+  <circle cx="30" cy="30" r="22" fill="none" stroke="white" stroke-width="2" stroke-opacity="0.3" />
+
+  <!-- مثلث التشغيل -->
+  <path d="M 22 18 L 22 42 L 42 30 Z" fill="url(#playGrad)" />
+
+  <!-- اسم الموقع -->
+  <text x="68" y="27" font-family="Cairo, Arial, sans-serif" font-size="16" font-weight="800" fill="#1f2937">
+    Reels
+  </text>
+  <text x="68" y="47" font-family="Cairo, Arial, sans-serif" font-size="16" font-weight="800" fill="url(#logoGrad)">
+    Generator
+  </text>
+</svg>

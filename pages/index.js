@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import Layout from '../components/Layout';
 import PostCard from '../components/PostCard';
+import FeatureCard from '../components/FeatureCard';
 
 export default function Home() {
   const [url, setUrl] = useState('');
@@ -73,59 +74,135 @@ export default function Home() {
 
   return (
     <Layout>
-      <div className="max-w-5xl mx-auto px-4 py-10">
+      <div className="max-w-6xl mx-auto px-4 py-8">
 
-        {/* Hero Section */}
-        <section className="text-center mb-12">
-  <div className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-    ✨ مدعوم بالذكاء الاصطناعي
-  </div>
-  <h1 className="text-4xl md:text-5xl font-bold text-gray-800 mb-4 leading-tight">
-    🎬 مولد منشورات من Reels
-  </h1>
-  <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed mb-8">
-    حوّل أي Reel أو فيديو قصير إلى <strong>منشورات تفاعلية جاهزة</strong> للنشر
-    في مجموعات فيسبوك. زيادة التفاعل والمتابعين بضغطة زر، مع إمكانية توليد صور احترافية.
-  </p>
-  
-  {/* صورة Hero */}
-  <div className="max-w-3xl mx-auto mb-8">
-    <img
-      src="/images/hero.jpg"
-      alt="مولد منشورات من Reels - واجهة الأداة"
-      className="w-full h-auto rounded-2xl shadow-2xl border-4 border-white"
-      loading="eager"
-    />
-  </div>
-</section>
+        {/* ===== Hero Section ===== */}
+        <section className="relative mb-12 rounded-3xl overflow-hidden shadow-2xl min-h-[500px] md:min-h-[600px]">
+          {/* صورة الخلفية */}
+          <img
+            src="/images/hero.jpg"
+            alt="خلفية Reels Generator"
+            className="absolute inset-0 w-full h-full object-cover"
+            loading="eager"
+            onError={(e) => {
+              e.target.style.display = 'none';
+              e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
+            }}
+          />
 
-        {/* Features Bar */}
-        <section className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
-          <div className="bg-white p-5 rounded-lg shadow-sm text-center">
-            <div className="text-3xl mb-2">⚡</div>
-            <h3 className="font-bold text-gray-800 mb-1">سريع</h3>
-            <p className="text-sm text-gray-600">منشورات جاهزة في ثوانٍ</p>
-          </div>
-          <div className="bg-white p-5 rounded-lg shadow-sm text-center">
-            <div className="text-3xl mb-2">🎨</div>
-            <h3 className="font-bold text-gray-800 mb-1">صور احترافية</h3>
-            <p className="text-sm text-gray-600">6 أنماط مختلفة للصور</p>
-          </div>
-          <div className="bg-white p-5 rounded-lg shadow-sm text-center">
-            <div className="text-3xl mb-2">🌍</div>
-            <h3 className="font-bold text-gray-800 mb-1">يدعم العربية</h3>
-            <p className="text-sm text-gray-600">نصوص عربية بخط جميل</p>
+          {/* طبقة داكنة لتحسين قراءة النص */}
+          <div
+            className="absolute inset-0"
+            style={{
+              background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.85) 0%, rgba(88, 28, 135, 0.80) 50%, rgba(131, 24, 67, 0.85) 100%)'
+            }}
+          ></div>
+
+          {/* زخارف دائرية */}
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full filter blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
+
+          {/* المحتوى */}
+          <div className="relative h-full flex items-center justify-center px-6 py-16 md:py-24">
+            <div className="text-center text-white max-w-4xl mx-auto">
+
+              {/* شارة */}
+              <div className="inline-block bg-white/20 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-8 border border-white/40 shadow-lg">
+                ✨  عالم التقنية بين يديك
+              </div>
+
+              {/* العنوان */}
+              <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight drop-shadow-2xl">
+                🎬 مولد منشورات من Reels
+              </h1>
+
+              {/* الوصف */}
+              <p className="text-lg md:text-2xl text-white/95 max-w-3xl mx-auto leading-relaxed mb-10 font-medium drop-shadow-lg">
+                حوّل أي Reel إلى{' '}
+                <strong className="text-yellow-300 font-black">منشورات تفاعلية جاهزة</strong>{' '}
+                للنشر في مجموعات فيسبوك مع صور احترافية بنص عربي جميل.
+              </p>
+
+              {/* الأزرار */}
+              <div className="flex flex-wrap gap-4 justify-center mb-10">
+                <a
+                  href="#start"
+                  className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
+                  style={{
+                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                    color: '#1f2937',
+                    boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
+                  }}
+                >
+                  <span>🚀</span>
+                  <span>ابدأ الآن مجاناً</span>
+                </a>
+
+                <a
+                  href="/blog"
+                  className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-lg border-2 border-white bg-white/10 backdrop-blur-md hover:bg-white/20 hover:scale-105 transition-all duration-300 text-white"
+                >
+                  <span>📚</span>
+                  <span>اقرأ المدونة</span>
+                </a>
+              </div>
+
+              {/* مؤشرات الثقة */}
+              <div className="flex flex-wrap justify-center gap-4 text-sm md:text-base text-white/90">
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span className="text-green-400 text-lg">✓</span>
+                  <span>مجاني 100%</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span className="text-green-400 text-lg">✓</span>
+                  <span>بدون تسجيل</span>
+                </div>
+                <div className="flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full">
+                  <span className="text-green-400 text-lg">✓</span>
+                  <span>يدعم العربية</span>
+                </div>
+              </div>
+
+            </div>
           </div>
         </section>
 
-        {/* AdSense Banner Top */}
-        <div className="mb-8 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg p-4">
+        {/* ===== Features Cards ===== */}
+        <section className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+          <FeatureCard
+            icon="⚡"
+            title="سريع جداً"
+            description="منشورات جاهزة في ثوانٍ بضغطة زر، دون انتظار."
+            image="/images/feature-1.jpg"
+            gradient="bg-gradient-to-br from-indigo-500 to-blue-600"
+          />
+          <FeatureCard
+            icon="🎨"
+            title="صور احترافية"
+            description="6 أنماط مختلفة للصور مع نص عربي بخط جميل."
+            image="/images/feature-2.jpg"
+            gradient="bg-gradient-to-br from-purple-500 to-pink-600"
+          />
+          <FeatureCard
+            icon="🌍"
+            title="يدعم العربية"
+            description="نصوص عربية واضحة بخط Cairo الجميل على الصور."
+            image="/images/feature-3.jpg"
+            gradient="bg-gradient-to-br from-pink-500 to-orange-500"
+          />
+        </section>
+
+        {/* ===== AdSense Banner ===== */}
+        <div className="mb-8 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
 
-        {/* Input Section */}
-        <section className="bg-white rounded-xl shadow-lg p-6 mb-6">
-          <h2 className="text-xl font-bold mb-4 text-gray-800">📝 ابدأ الآن</h2>
+        {/* ===== Input Section ===== */}
+        <section id="start" className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 border border-gray-100">
+          <h2 className="text-xl font-bold mb-4 text-gray-800 flex items-center gap-2">
+            <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+            📝 ابدأ الآن
+          </h2>
 
           <label className="block text-sm font-semibold text-gray-700 mb-2">
             رابط الريل
@@ -136,25 +213,28 @@ export default function Home() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder="https://www.facebook.com/reel/..."
-              className="flex-1 border border-gray-300 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-1 border border-gray-300 rounded-xl px-4 py-3 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
             />
             <button
               onClick={handleExtract}
               disabled={loading || !url}
-              className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-md font-medium disabled:opacity-50 transition"
+              className="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white px-8 py-3 rounded-xl font-bold disabled:opacity-50 transition shadow-md hover:shadow-lg"
             >
               استخراج
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2">
+          <p className="text-xs text-gray-500 mt-3">
             💡 إن لم يعمل الاستخراج، يمكنك كتابة الوصف يدوياً في الخطوة التالية.
           </p>
         </section>
 
-        {/* Reel Data Section */}
+        {/* ===== Reel Data Section ===== */}
         {reelData && (
-          <section className="bg-white rounded-xl shadow-lg p-6 mb-6">
-            <h2 className="text-lg font-bold mb-4">📄 بيانات الريل</h2>
+          <section className="bg-white rounded-2xl shadow-xl p-6 md:p-8 mb-6 border border-gray-100">
+            <h2 className="text-lg font-bold mb-4 flex items-center gap-2">
+              <span className="w-1 h-5 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+              📄 بيانات الريل
+            </h2>
 
             <div className="space-y-3">
               <div>
@@ -163,7 +243,7 @@ export default function Home() {
                   type="text"
                   value={reelData.title}
                   onChange={(e) => setReelData({ ...reelData, title: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
               </div>
 
@@ -173,7 +253,7 @@ export default function Home() {
                   value={reelData.description}
                   onChange={(e) => setReelData({ ...reelData, description: e.target.value })}
                   rows={3}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 />
               </div>
             </div>
@@ -184,7 +264,7 @@ export default function Home() {
                 <select
                   value={options.language}
                   onChange={(e) => setOptions({ ...options, language: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
                 >
                   <option>العربية الفصحى</option>
                   <option>الدارجة المغاربية</option>
@@ -198,7 +278,7 @@ export default function Home() {
                 <select
                   value={options.tone}
                   onChange={(e) => setOptions({ ...options, tone: e.target.value })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
                 >
                   <option>ودي وتفاعلي</option>
                   <option>احترافي ورسمي</option>
@@ -212,7 +292,7 @@ export default function Home() {
                 <select
                   value={options.count}
                   onChange={(e) => setOptions({ ...options, count: parseInt(e.target.value) })}
-                  className="w-full border border-gray-300 rounded-md px-3 py-2 mt-1"
+                  className="w-full border border-gray-300 rounded-xl px-3 py-2 mt-1 focus:ring-2 focus:ring-indigo-500"
                 >
                   <option value={3}>3</option>
                   <option value={5}>5</option>
@@ -225,37 +305,33 @@ export default function Home() {
             <button
               onClick={handleGenerate}
               disabled={loading}
-              className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-3 rounded-lg font-bold text-lg disabled:opacity-50 transition"
+              className="w-full mt-6 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white py-4 rounded-xl font-bold text-lg disabled:opacity-50 transition shadow-lg hover:shadow-xl"
             >
               {loading ? '⏳ جاري التوليد...' : '✨ ولّد المنشورات'}
             </button>
           </section>
         )}
 
-        {/* Status */}
+        {/* ===== Status ===== */}
         {step && (
-          <div className="text-center text-gray-600 mb-4 font-medium">{step}</div>
+          <div className="text-center text-gray-700 mb-4 font-medium bg-white/60 backdrop-blur-sm rounded-xl py-3 px-4 shadow-sm">
+            {step}
+          </div>
         )}
         {error && (
-          <div className="bg-red-100 text-red-700 p-4 rounded-lg mb-4">
+          <div className="bg-red-50 border-r-4 border-red-500 text-red-700 p-4 rounded-xl mb-4 shadow-sm">
             ⚠️ {error}
           </div>
         )}
 
-        {/* AdSense Banner Middle */}
-        {posts.length === 0 && (
-          <div className="my-8 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg p-4">
-            <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
-          </div>
-        )}
-
-        {/* Results */}
+        {/* ===== Results ===== */}
         {posts.length > 0 && (
           <section>
-            <h2 className="text-2xl font-bold mb-4 text-gray-800">
+            <h2 className="text-2xl font-bold mb-6 text-gray-800 flex items-center gap-2">
+              <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
               ✅ المنشورات الجاهزة ({posts.length})
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
               {posts.map((post, i) => (
                 <PostCard key={i} post={post} index={i} />
               ))}
@@ -263,9 +339,10 @@ export default function Home() {
           </section>
         )}
 
-        {/* SEO Content Section */}
-        <section className="mt-16 bg-white rounded-xl shadow-sm p-8">
-          <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        {/* ===== SEO Content Section ===== */}
+        <section className="mt-16 bg-white rounded-2xl shadow-lg p-8 md:p-10 border border-gray-100">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span className="w-1 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
             كيف يساعدك Reels Generator في زيادة تفاعلك؟
           </h2>
           <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4">
@@ -316,8 +393,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* AdSense Banner Bottom */}
-        <div className="my-8 text-center bg-gray-50 border border-dashed border-gray-300 rounded-lg p-4">
+        {/* ===== AdSense Banner Bottom ===== */}
+        <div className="my-8 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
 
