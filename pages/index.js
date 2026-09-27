@@ -1,9 +1,11 @@
 import Link from 'next/link';
 import Layout from '../components/Layout';
+import Sidebar from '../components/Sidebar';
+import NewsTicker from '../components/NewsTicker';
 import { blogArticlesList } from '../lib/blogData';
 
 export default function Home() {
-  const latestArticles = blogArticlesList.slice(0, 3);
+  const latestArticles = blogArticlesList.slice(0, 9);
 
   const tools = [
     {
@@ -36,11 +38,13 @@ export default function Home() {
     },
   ];
 
-  return (
+    return (
     <Layout
       title="آخر الأخبار + أدوات ذكية"
       description="نبض التقنية - آخر أخبار التكنولوجيا والذكاء الاصطناعي + أدوات ذكية مجانية لإنشاء المحتوى العربي"
     >
+      <NewsTicker />
+
       <div className="max-w-7xl mx-auto px-4 py-8">
 
         {/* ===== Hero Section ===== */}
@@ -140,65 +144,84 @@ export default function Home() {
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
 
-        {/* ===== قسم الأخبار ===== */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-8">
+        {/* ===== قسم الأخبار + Sidebar ===== */}
+<section className="mb-16">
+  <div className="flex items-center justify-between mb-8">
+    <div className="flex items-center gap-3">
+      <span className="w-1.5 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+      <h2 className="text-3xl md:text-4xl font-black text-gray-800">
+        📰 آخر الأخبار
+      </h2>
+    </div>
+    <Link
+      href="/blog"
+      className="text-indigo-600 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all"
+    >
+      <span>عرض الكل</span>
+      <span>←</span>
+    </Link>
+  </div>
+
+  {/* Grid: Articles + Sidebar */}
+  <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+    {/* ===== Articles Column ===== */}
+    <div className="lg:col-span-2 space-y-6">
+  {latestArticles.map((article, index) => (
+    <div key={article.slug}>
+      {/* المقال */}
+      <Link
+        href={`/blog/${article.slug}`}
+        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 flex flex-col md:flex-row hover:-translate-y-1"
+      >
+<div className="relative md:w-2/5 h-56 md:h-auto overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100 flex-shrink-0">          <img
+            src={article.image}
+            alt={article.title}
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
+          <span className="absolute top-3 right-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+            {article.category}
+          </span>
+        </div>
+
+        <div className="p-5 flex flex-col flex-1">
+          <h3 className="text-xl font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition line-clamp-2 leading-snug">
+            {article.title}
+          </h3>
+          <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-1">
+            {article.excerpt}
+          </p>
+          <div className="flex items-center justify-between text-xs text-gray-400 border-t pt-3">
             <div className="flex items-center gap-3">
-              <span className="w-1.5 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-800">
-                📰 آخر الأخبار
-              </h2>
+              <span className="flex items-center gap-1">📅 {article.date}</span>
+              <span className="flex items-center gap-1">⏱️ {article.readTime}</span>
             </div>
-            <Link
-              href="/blog"
-              className="text-indigo-600 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all"
-            >
-              <span>عرض الكل</span>
-              <span>←</span>
-            </Link>
+            <span className="flex items-center gap-1 text-indigo-600 font-bold">
+              اقرأ المزيد ←
+            </span>
           </div>
+        </div>
+      </Link>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {latestArticles.map((article) => (
-              <Link
-                key={article.slug}
-                href={`/blog/${article.slug}`}
-                className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2 flex flex-col"
-              >
-                <div className="relative w-full aspect-[16/10] overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
-                  <img
-                    src={article.image}
-                    alt={article.title}
-                    className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition-transform duration-700"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-                  <span className="absolute top-3 right-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
-                    {article.category}
-                  </span>
-                  <span className="absolute bottom-3 left-3 bg-black/70 backdrop-blur-sm text-white text-xs font-medium px-2.5 py-1 rounded-full">
-                    ⏱️ {article.readTime}
-                  </span>
-                </div>
+    
 
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold text-gray-800 mb-3 group-hover:text-indigo-600 transition line-clamp-2 leading-snug min-h-[56px]">
-                    {article.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-1">
-                    {article.excerpt}
-                  </p>
-                  <div className="flex items-center justify-between text-xs text-gray-400 border-t pt-3">
-                    <span className="flex items-center gap-1">📅 {article.date}</span>
-                    <span className="flex items-center gap-1 text-indigo-600 font-bold">
-                      اقرأ المزيد ←
-                    </span>
-                  </div>
-                </div>
-              </Link>
-            ))}
-          </div>
-        </section>
+      {/* Newsletter بعد المقال الأول */}
+      
+       
+      
+    </div>
+  ))}
+</div>
+
+    {/* ===== Sidebar ===== */}
+    <div className="lg:col-span-1">
+      <Sidebar />
+    </div>
+
+  </div>
+</section>
 
         {/* ===== AdSense Banner Middle ===== */}
         <div className="mb-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">

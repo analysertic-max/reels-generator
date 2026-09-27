@@ -22,12 +22,23 @@ export default function Layout({
   }, []);
 
   const navLinks = [
-    { href: '/', label: 'الرئيسية', icon: '🏠' },
-    { href: '/blog', label: 'الأخبار', icon: '📰' },
-    { href: '/tools', label: 'الأدوات', icon: '🛠️' },
-    { href: '/about', label: 'من نحن', icon: 'ℹ️' },
-    { href: '/contact', label: 'تواصل معنا', icon: '📧' },
-  ];
+  { href: '/', label: 'الرئيسية', icon: '🏠' },
+  {
+    href: '/blog',
+    label: 'الأخبار',
+    icon: '📰',
+    dropdown: [
+      { href: '/blog?category=تكنولوجيا', label: 'تكنولوجيا', icon: '💻' },
+      { href: '/blog?category=سوشيال ميديا', label: 'سوشيال ميديا', icon: '📱' },
+      { href: '/blog?category=تسويق', label: 'تسويق', icon: '📈' },
+      { href: '/blog?category=تصميم', label: 'تصميم', icon: '🎨' },
+      { href: '/blog?category=ذكاء اصطناعي', label: 'ذكاء اصطناعي', icon: '🤖' },
+    ]
+  },
+  { href: '/tools', label: 'الأدوات', icon: '🛠️' },
+  { href: '/about', label: 'من نحن', icon: 'ℹ️' },
+  { href: '/contact', label: 'تواصل معنا', icon: '📧' },
+];
 
   const isActive = (href) => router.pathname === href;
 
@@ -60,22 +71,44 @@ export default function Layout({
           <Logo size="md" variant="light" />
 
           {/* Desktop Menu */}
-          <nav className="hidden md:flex items-center gap-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`px-3 py-2 rounded-full text-sm font-bold transition-all duration-200 ${
-                  isActive(link.href)
-                    ? 'bg-white text-indigo-700 shadow-md'
-                    : 'text-white hover:bg-white/20'
-                }`}
-              >
-                <span className="mr-1">{link.icon}</span>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
+<nav className="hidden md:flex items-center gap-1">
+  {navLinks.map((link) => (
+    <div key={link.href} className="relative group">
+      <Link
+        href={link.href}
+        className={`px-3 py-2 rounded-full text-sm font-bold transition-all duration-200 inline-flex items-center gap-1 ${
+          isActive(link.href)
+            ? 'bg-white text-indigo-700 shadow-md'
+            : 'text-white hover:bg-white/20'
+        }`}
+      >
+        <span>{link.icon}</span>
+        <span>{link.label}</span>
+        {link.dropdown && (
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        )}
+      </Link>
+
+      {/* Dropdown */}
+      {link.dropdown && (
+        <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-2xl shadow-2xl border border-gray-100 py-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 z-50">
+          {link.dropdown.map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="flex items-center gap-3 px-4 py-2.5 text-sm text-gray-700 hover:bg-indigo-50 hover:text-indigo-600 transition font-medium"
+            >
+              <span className="text-lg">{item.icon}</span>
+              {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  ))}
+</nav>
 
           {/* CTA Button */}
           <div className="hidden md:block">
