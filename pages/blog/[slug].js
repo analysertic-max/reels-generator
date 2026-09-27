@@ -5,6 +5,7 @@ import { blogArticles, blogArticlesList } from '../../lib/blogData';
 import Comments from '../../components/Comments';
 
 
+
 export default function ArticlePage() {
   const router = useRouter();
   const { slug } = router.query;
