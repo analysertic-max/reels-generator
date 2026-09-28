@@ -62,8 +62,7 @@ export default function Layout({
           scrolled ? 'shadow-xl py-2' : 'shadow-lg py-3'
         }`}
       >
-        <div className="absolute inset-0 bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600"></div>
-        {scrolled && (
+<div className="absolute inset-0 bg-gradient-to-r from-indigo-600/90 via-purple-600/90 to-pink-600/90 backdrop-blur-md"></div>        {scrolled && (
           <div className="absolute inset-0 bg-black/20 backdrop-blur-md"></div>
         )}
 
@@ -169,9 +168,9 @@ export default function Layout({
 
       <div className="h-20" />
 
-      <main className="min-h-screen bg-gradient-to-br from-slate-50 via-indigo-50/30 to-purple-50/30">
-        {children}
-      </main>
+      <main className="min-h-screen relative z-10">
+  {children}
+</main>
 
       {/* ===== Footer ===== */}
       <footer className="relative bg-gradient-to-br from-gray-900 via-indigo-950 to-purple-950 text-gray-300 overflow-hidden">

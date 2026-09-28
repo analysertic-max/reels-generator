@@ -2,7 +2,10 @@ import Link from 'next/link';
 import { blogArticlesList } from '../lib/blogData';
 
 export default function NewsTicker() {
-  const latest = blogArticlesList.slice(0, 6);
+  // ترتيب حسب التاريخ (الأحدث أولاً) واختيار 6
+  const latest = [...blogArticlesList]
+    .sort((a, b) => new Date(b.date) - new Date(a.date))
+    .slice(0, 6);
 
   return (
     <div className="bg-gradient-to-r from-red-600 via-red-500 to-orange-500 text-white overflow-hidden shadow-lg">
@@ -10,7 +13,7 @@ export default function NewsTicker() {
         {/* شارة "عاجل" */}
         <div className="flex-shrink-0 bg-white text-red-600 font-black px-4 py-2 flex items-center gap-2 z-10">
           <span className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></span>
-          <span className="text-sm">اخر الأخبار </span>
+          <span className="text-sm">اخر الأخبار</span>
         </div>
 
         {/* الشريط المتحرك */}

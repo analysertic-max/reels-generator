@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Layout from '../../components/Layout';
 import Sidebar from '../../components/Sidebar';
@@ -8,8 +9,19 @@ import { blogArticlesList } from '../../lib/blogData';
 const ARTICLES_PER_PAGE = 6;
 
 export default function BlogIndex() {
+  const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('الكل');
+
+  // قراءة التصنيف من الـ URL
+  useEffect(() => {
+    if (router.isReady && router.query.category) {
+      setSelectedCategory(decodeURIComponent(router.query.category));
+      setCurrentPage(1);
+    } else if (router.isReady) {
+      setSelectedCategory('الكل');
+    }
+  }, [router.isReady, router.query.category]);
 
   // التصنيفات
   const categories = ['الكل', 'تكنولوجيا', 'سوشيال ميديا', 'تسويق', 'تصميم', 'ذكاء اصطناعي'];
@@ -24,9 +36,15 @@ export default function BlogIndex() {
   const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
   const currentArticles = filtered.slice(startIndex, startIndex + ARTICLES_PER_PAGE);
 
-  const handleCategoryChange = (cat) => {
+    const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
     setCurrentPage(1);
+    // تحديث الـ URL
+    if (cat === 'الكل') {
+      router.push('/blog', undefined, { shallow: true });
+    } else {
+      router.push(`/blog?category=${encodeURIComponent(cat)}`, undefined, { shallow: true });
+    }
   };
 
   return (

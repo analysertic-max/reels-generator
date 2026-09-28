@@ -74,9 +74,16 @@ export default function Home() {
             <div className="text-center text-white max-w-4xl mx-auto">
 
               {/* الشعار */}
-              <div className="inline-block bg-white/20 backdrop-blur-md px-6 py-3 rounded-full text-base font-bold mb-8 border border-white/40 shadow-lg">
-                📰 نبض التقنية
-              </div>
+<div className="inline-flex items-center gap-3 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/30 shadow-lg mb-8 transition-all duration-300 hover:bg-white/20" >
+  <img 
+   src="/images/nabd.jpg"
+    alt="شعار نبض التقنية" 
+    className="w-12 h-12 rounded-full object-cover border-2 border-purple-400/50 shadow-md "
+  />
+  <span className="text-xl md:text-2xl font-extrabold bg-gradient-to-r from-purple-300 to-pink-300 bg-clip-text text-transparent tracking-wide drop-shadow-md">
+    نبض التقنية
+  </span>
+</div>
 
               {/* العنوان الرئيسي */}
               <h1 className="text-4xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight drop-shadow-2xl">
