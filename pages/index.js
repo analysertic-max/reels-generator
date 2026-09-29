@@ -169,6 +169,8 @@ export default function Home() {
     </Link>
   </div>
 
+
+
   {/* Grid: Articles + Sidebar */}
   <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
 
@@ -234,6 +236,8 @@ export default function Home() {
         <div className="mb-10 text-center bg-white/60 backdrop-blur-sm border border-dashed border-gray-300 rounded-2xl p-6">
           <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
         </div>
+
+
 
         {/* ===== قسم الأدوات ===== */}
         <section className="mb-16">

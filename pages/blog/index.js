@@ -24,7 +24,17 @@ export default function BlogIndex() {
   }, [router.isReady, router.query.category]);
 
   // التصنيفات
-  const categories = ['الكل', 'تكنولوجيا', 'سوشيال ميديا', 'تسويق', 'تصميم', 'ذكاء اصطناعي'];
+ const categories = [
+  'الكل',
+  'تكنولوجيا',
+  'هواتف ذكية',
+  'تطبيقات وبرامج',
+  'كيف',
+  'سوشيال ميديا',
+  'تسويق',
+  'تصميم',
+  'ذكاء اصطناعي',
+];
 
   // فلترة حسب التصنيف
   const filtered = selectedCategory === 'الكل'
@@ -36,15 +46,23 @@ export default function BlogIndex() {
   const startIndex = (currentPage - 1) * ARTICLES_PER_PAGE;
   const currentArticles = filtered.slice(startIndex, startIndex + ARTICLES_PER_PAGE);
 
-    const handleCategoryChange = (cat) => {
+      const handleCategoryChange = (cat) => {
     setSelectedCategory(cat);
     setCurrentPage(1);
-    // تحديث الـ URL
+    // العودة لأعلى الصفحة
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    
     if (cat === 'الكل') {
       router.push('/blog', undefined, { shallow: true });
     } else {
       router.push(`/blog?category=${encodeURIComponent(cat)}`, undefined, { shallow: true });
     }
+  };
+
+  const handlePageChange = (page) => {
+    setCurrentPage(page);
+    // العودة لأعلى الصفحة
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
   return (
@@ -159,34 +177,34 @@ export default function BlogIndex() {
             {totalPages > 1 && (
               <div className="mt-10 flex items-center justify-center gap-2">
                 <button
-                  onClick={() => setCurrentPage((p) => Math.max(1, p - 1))}
-                  disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 font-bold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-                >
-                  ← السابق
-                </button>
+  onClick={() => handlePageChange(Math.max(1, currentPage - 1))}
+  disabled={currentPage === 1}
+  className="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 font-bold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+>
+  ← السابق
+</button>
 
-                {[...Array(totalPages)].map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setCurrentPage(i + 1)}
-                    className={`w-10 h-10 rounded-xl font-bold transition ${
-                      currentPage === i + 1
-                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
-                        : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
-                    }`}
-                  >
-                    {i + 1}
-                  </button>
-                ))}
+{[...Array(totalPages)].map((_, i) => (
+  <button
+    key={i}
+    onClick={() => handlePageChange(i + 1)}
+    className={`w-10 h-10 rounded-xl font-bold transition ${
+      currentPage === i + 1
+        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-md'
+        : 'bg-white border border-gray-200 text-gray-700 hover:bg-gray-50'
+    }`}
+  >
+    {i + 1}
+  </button>
+))}
 
-                <button
-                  onClick={() => setCurrentPage((p) => Math.min(totalPages, p + 1))}
-                  disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 font-bold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
-                >
-                  التالي →
-                </button>
+<button
+  onClick={() => handlePageChange(Math.min(totalPages, currentPage + 1))}
+  disabled={currentPage === totalPages}
+  className="px-4 py-2 rounded-xl bg-white border border-gray-200 text-gray-700 font-bold hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition"
+>
+  التالي →
+</button>
               </div>
             )}
 

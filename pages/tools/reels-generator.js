@@ -140,7 +140,7 @@ export default function ReelsGenerator() {
             icon="⚡"
             title="سريع جداً"
             description="منشورات جاهزة في ثوانٍ بضغطة زر، دون انتظار."
-            image="/images/feature-1.jpg"
+            image="/images/speed.jpg"
             gradient="bg-gradient-to-br from-indigo-500 to-blue-600"
           />
           <FeatureCard
