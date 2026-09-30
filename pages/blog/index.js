@@ -12,16 +12,28 @@ export default function BlogIndex() {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState('الكل');
+  const [searchQuery, setSearchQuery] = useState('');
+
 
   // قراءة التصنيف من الـ URL
-  useEffect(() => {
-    if (router.isReady && router.query.category) {
+  // قراءة التصنيف والبحث من الـ URL
+useEffect(() => {
+  if (router.isReady) {
+    if (router.query.category) {
       setSelectedCategory(decodeURIComponent(router.query.category));
-      setCurrentPage(1);
-    } else if (router.isReady) {
+    } else {
       setSelectedCategory('الكل');
     }
-  }, [router.isReady, router.query.category]);
+
+    if (router.query.search) {
+      setSearchQuery(decodeURIComponent(router.query.search));
+    } else {
+      setSearchQuery('');
+    }
+
+    setCurrentPage(1);
+  }
+}, [router.isReady, router.query.category, router.query.search]);
 
   // التصنيفات
  const categories = [
@@ -37,9 +49,21 @@ export default function BlogIndex() {
 ];
 
   // فلترة حسب التصنيف
-  const filtered = selectedCategory === 'الكل'
-    ? blogArticlesList
-    : blogArticlesList.filter((a) => a.category === selectedCategory);
+  let filtered = selectedCategory === 'الكل'
+  ? blogArticlesList
+  : blogArticlesList.filter((a) => a.category?.trim() === selectedCategory?.trim());
+
+// فلترة حسب البحث
+if (searchQuery.trim()) {
+  const query = searchQuery.trim().toLowerCase();
+  filtered = filtered.filter(
+    (a) =>
+      a.title?.toLowerCase().includes(query) ||
+      a.excerpt?.toLowerCase().includes(query) ||
+      a.content?.toLowerCase().includes(query) ||
+      a.category?.toLowerCase().includes(query)
+  );
+}
 
   // Pagination
   const totalPages = Math.ceil(filtered.length / ARTICLES_PER_PAGE);
@@ -97,6 +121,31 @@ export default function BlogIndex() {
           </div>
         </section>
 
+        {/* ===== نتائج البحث ===== */}
+{searchQuery && (
+  <div className="mb-6 bg-gradient-to-r from-indigo-50 to-purple-50 border border-indigo-200 rounded-2xl p-5 flex items-center justify-between">
+    <div className="flex items-center gap-3">
+      <span className="text-2xl">🔍</span>
+      <div>
+        <p className="text-sm text-gray-600">نتائج البحث عن:</p>
+        <p className="font-bold text-indigo-600 text-lg">"{searchQuery}"</p>
+        <p className="text-xs text-gray-500 mt-1">
+          {filtered.length} نتيجة {filtered.length === 0 ? '(لا توجد نتائج)' : 'وجدت'}
+        </p>
+      </div>
+    </div>
+    <button
+      onClick={() => {
+        router.push('/blog', undefined, { shallow: true });
+        setSearchQuery('');
+      }}
+      className="bg-red-500 hover:bg-red-600 text-white px-4 py-2 rounded-full text-sm font-bold transition"
+    >
+      ✕ إلغاء البحث
+    </button>
+  </div>
+)}
+
         {/* ===== Category Filter ===== */}
         <div className="mb-8 bg-white rounded-2xl shadow-lg p-4 border border-gray-100">
           <div className="flex items-center gap-2 overflow-x-auto pb-2">
@@ -124,11 +173,28 @@ export default function BlogIndex() {
           <div className="lg:col-span-2">
 
             {currentArticles.length === 0 ? (
-              <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
-                <div className="text-6xl mb-4">📭</div>
-                <p className="text-gray-600">لا توجد مقالات في هذا التصنيف.</p>
-              </div>
-            ) : (
+  <div className="bg-white rounded-2xl shadow-lg p-12 text-center">
+    <div className="text-6xl mb-4">{searchQuery ? '🔍' : '📭'}</div>
+    <p className="text-gray-600 mb-4">
+      {searchQuery
+        ? `لا توجد نتائج مطابقة لـ "${searchQuery}"`
+        : 'لا توجد مقالات في هذا التصنيف.'}
+    </p>
+    <button
+      onClick={() => {
+        handleCategoryChange('الكل');
+        if (searchQuery) {
+          router.push('/blog', undefined, { shallow: true });
+          setSearchQuery('');
+        }
+      }}
+      className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-2.5 rounded-full font-bold"
+    >
+      {searchQuery ? 'مسح البحث' : 'عرض كل المقالات'}
+    </button>
+  </div>
+) : (
+  
               <div className="space-y-6">
                 {currentArticles.map((article) => (
                   <Link
@@ -208,10 +274,7 @@ export default function BlogIndex() {
               </div>
             )}
 
-            {/* ===== AdSense ===== */}
-            <div className="mt-10 text-center bg-white/60 border border-dashed border-gray-300 rounded-2xl p-6">
-              <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
-            </div>
+            
 
           </div>
 

@@ -75,3 +75,192 @@ input, textarea, select {
   background: #6366f1;
   color: white;
 }
+
+/* ===== Dark Mode ===== */
+.dark {
+  color-scheme: dark;
+}
+
+.dark body {
+  background: #0f172a;
+  color: #e2e8f0;
+}
+
+.dark main {
+  background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #1e293b 100%) !important;
+}
+
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+.dark .text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+.dark .text-gray-700 {
+  color: #cbd5e1 !important;
+}
+
+.dark .text-gray-600 {
+  color: #94a3b8 !important;
+}
+
+.dark .bg-gray-100 {
+  background-color: #334155 !important;
+}
+
+.dark .bg-gray-50 {
+  background-color: #1e293b !important;
+}
+
+.dark .border-gray-100,
+.dark .border-gray-200,
+.dark .border-gray-300 {
+  border-color: #334155 !important;
+}
+
+.dark .shadow-md,
+.dark .shadow-lg,
+.dark .shadow-xl {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* ===== Dark Mode - Trending Tabs ===== */
+.dark .group:hover h3,
+.dark .group:hover .text-gray-800,
+.dark a:hover .line-clamp-2,
+.dark .hover\:text-indigo-600:hover {
+  color: #a5b4fc !important; /* لون بنفسجي فاتح واضح */
+}
+
+/* نصوص العناوين داخل البطاقات */
+.dark h3,
+.dark .group h3,
+.dark .group .text-gray-800 {
+  color: #f1f5f9 !important;
+}
+
+/* عند التمرير */
+.dark .group:hover h3,
+.dark .group:hover .text-gray-800 {
+  color: #c4b5fd !important; /* بنفسجي أفتح */
+}
+
+/* التواريخ والتصنيفات */
+.dark .text-gray-400,
+.dark .text-gray-500 {
+  color: #94a3b8 !important;
+}
+
+/* خلفية التصنيفات الصغيرة */
+.dark .bg-gray-100 {
+  background-color: #334155 !important;
+  color: #cbd5e1 !important;
+}
+
+/* الصور داخل البطاقات - إزالة الخلفية البيضاء */
+.dark .bg-white {
+  background-color: #1e293b !important;
+}
+
+/* الخط الفاصل */
+.dark .border-gray-100,
+.dark .border-gray-200 {
+  border-color: #334155 !important;
+}
+
+/* Animation for search bar */
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-down {
+  animation: slide-down 0.2s ease-out;
+}
+
+/* Fix: Header padding للمساحة بعد الإغلاق */
+header + .h-20 {
+  height: 80px;
+}
+
+/* ===== Newsletter Section - Dark Mode Protection ===== */
+
+/* حماية القسم من تغييرات الوضع الليلي */
+.newsletter-section {
+  /* ثابت في الوضعين */
+  background-color: transparent !important;
+}
+
+/* النص داخل القسم - ثابت أبيض */
+.newsletter-section h3,
+.newsletter-section p,
+.newsletter-section label,
+.newsletter-section span {
+  color: inherit !important;
+}
+
+/* حقل البريد الإلكتروني - يبقى أبيض مع نص داكن */
+.newsletter-section input[type="email"] {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  border-color: transparent !important;
+}
+
+.newsletter-section input[type="email"]::placeholder {
+  color: #6b7280 !important;
+  opacity: 1 !important;
+}
+
+.newsletter-section input[type="email"]:focus {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+  box-shadow: 0 0 0 3px rgba(251, 191, 36, 0.5) !important;
+}
+
+/* زر الاشتراك - يبقى ذهبي */
+.newsletter-section button[type="submit"] {
+  /* الألوان محددة inline في JSX */
+  color: #1f2937 !important;
+}
+
+/* الوضع الليلي - نفس المظهر */
+.dark .newsletter-section {
+  background-color: transparent !important;
+}
+
+.dark .newsletter-section h3,
+.dark .newsletter-section p,
+.dark .newsletter-section span {
+  color: inherit !important;
+}
+
+.dark .newsletter-section input[type="email"] {
+  background-color: #ffffff !important;
+  color: #111827 !important;
+}
+
+.dark .newsletter-section input[type="email"]::placeholder {
+  color: #6b7280 !important;
+}
+
+.dark .newsletter-section button[type="submit"] {
+  color: #1f2937 !important;
+}
+
+/* حالة النجاح */
+.newsletter-section .success-box {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+}
+
+.dark .newsletter-section .success-box {
+  background-color: rgba(255, 255, 255, 0.15) !important;
+}
