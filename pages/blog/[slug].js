@@ -64,7 +64,6 @@ export default function ArticlePage() {
 
         <article className="bg-white rounded-3xl shadow-xl overflow-hidden">
 
-          {/* ===== صورة المقال - ارتفاع محدود ===== */}
           {/* ===== صورة المقال - كاملة بدون قص ===== */}
 <div className="relative w-full bg-gray-900 overflow-hidden">
   <img
