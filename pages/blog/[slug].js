@@ -61,7 +61,7 @@ export default function ArticlePage({ article, relatedArticles }) {
 
           {/* ===== Meta ===== */}
           <div className="px-6 md:px-10 pt-6">
-            <div className="flex items-center gap-4 text-sm text-gray-400 pb-6 border-b">
+            <div className="flex items-center gap-4 text-sm text-gray-600 pb-6 border-b">
               <span className="flex items-center gap-1">📅 {article.date}</span>
               <span className="flex items-center gap-1">⏱️ {article.readTime}</span>
             </div>
@@ -169,7 +169,7 @@ export default function ArticlePage({ article, relatedArticles }) {
                   <h3 className="font-bold text-gray-800 group-hover:text-indigo-600 transition line-clamp-2 text-sm leading-snug min-h-[40px]">
                     {art.title}
                   </h3>
-                  <p className="text-xs text-gray-400 mt-2">{art.date}</p>
+                  <p className="text-xs text-gray-600 mt-2">{art.date}</p>
                 </div>
               </Link>
             ))}
