@@ -11,7 +11,11 @@ export default function Logo({ size = 'md', variant = 'light' }) {
   const isLight = variant === 'light';
 
   return (
-    <Link href="/" className="flex items-center gap-2.5 group">
+    <Link
+      href="/"
+      className="flex items-center gap-2.5 group"
+      aria-label="نبض التقنية - الصفحة الرئيسية"
+    >
       {/* أيقونة النبض */}
       <div className="relative">
         <svg
@@ -20,12 +24,16 @@ export default function Logo({ size = 'md', variant = 'light' }) {
           viewBox="0 0 60 60"
           xmlns="http://www.w3.org/2000/svg"
           className="transition-transform group-hover:scale-110 duration-300"
+          role="img"
+          aria-hidden="true"
+          focusable="false"
         >
+          <title>شعار نبض التقنية</title>
           <defs>
             <linearGradient id="pulseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
               <stop offset="0%" stopColor={isLight ? '#ffffff' : '#6366f1'} />
-              <stop offset="50%" stopColor={isLight ? '#fef3c7' : '#a855f7'} />
-              <stop offset="100%" stopColor={isLight ? '#fbbf24' : '#ec4899'} />
+              <stop offset="50%" stopColor={isLight ? '#721eb8' : '#a855f7'} />
+              <stop offset="100%" stopColor={isLight ? '#c51eaf' : '#ec4899'} />
             </linearGradient>
           </defs>
 
@@ -50,7 +58,7 @@ export default function Logo({ size = 'md', variant = 'light' }) {
         <div className={`font-extrabold ${s.text} ${isLight ? 'text-white' : 'text-gray-800'} leading-none`}>
           نبض
         </div>
-        <div className={`font-extrabold ${s.text} ${isLight ? 'text-yellow-200' : 'text-indigo-600'} leading-none`}>
+        <div className={`font-extrabold ${s.text} ${isLight ? 'text-yellow-100' : 'text-indigo-600'} leading-none`}>
           التقنية
         </div>
       </div>
