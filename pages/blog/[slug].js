@@ -1,33 +1,9 @@
 import Layout from '../../components/Layout';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import { blogArticles, blogArticlesList } from '../../lib/blogData';
 import Comments from '../../components/Comments';
 
-
-
-export default function ArticlePage() {
-  const router = useRouter();
-  const { slug } = router.query;
-  const article = blogArticles[slug];
-
-  if (!article) {
-    return (
-      <Layout title="المقال غير موجود">
-        <div className="max-w-3xl mx-auto px-4 py-20 text-center">
-          <h1 className="text-6xl font-bold text-gray-800 mb-4">404</h1>
-          <p className="text-gray-600 mb-6">المقال الذي تبحث عنه غير موجود.</p>
-          <Link
-            href="/blog"
-            className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-6 py-3 rounded-full font-bold"
-          >
-            العودة للمدونة
-          </Link>
-        </div>
-      </Layout>
-    );
-  }
-
+export default function ArticlePage({ article, relatedArticles }) {
   const htmlContent = article.content
     .split('\n')
     .map((line) => {
@@ -45,10 +21,6 @@ export default function ArticlePage() {
     })
     .join('\n');
 
-  const relatedArticles = blogArticlesList
-    .filter((a) => a.slug !== slug)
-    .slice(0, 3);
-
   return (
     <Layout title={article.title} description={article.excerpt}>
       <div className="max-w-4xl mx-auto px-4 py-12">
@@ -65,27 +37,27 @@ export default function ArticlePage() {
         <article className="bg-white rounded-3xl shadow-xl overflow-hidden">
 
           {/* ===== صورة المقال - كاملة بدون قص ===== */}
-<div className="relative w-full bg-gray-900 overflow-hidden">
-  <img
-    src={article.image}
-    alt={article.title}
-    className="w-full h-auto block"
-    loading="eager"
-  />
-</div>
+          <div className="relative w-full bg-gray-900 overflow-hidden">
+            <img
+              src={article.image}
+              alt={article.title}
+              className="w-full h-auto block"
+              loading="eager"
+            />
+          </div>
 
-{/* ===== العنوان أسفل الصورة ===== */}
-<div className="px-6 md:px-10 pt-8 pb-4">
-  <span className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full mb-4">
-    {article.category}
-  </span>
-  <h1 className="text-2xl md:text-4xl font-bold text-gray-900 leading-tight mb-2">
-    {article.title}
-  </h1>
-  <p className="text-gray-500 text-sm md:text-base">
-    {article.excerpt}
-  </p>
-</div>
+          {/* ===== العنوان أسفل الصورة ===== */}
+          <div className="px-6 md:px-10 pt-8 pb-4">
+            <span className="inline-block bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-3 py-1.5 rounded-full mb-4">
+              {article.category}
+            </span>
+            <h1 className="text-2xl md:text-4xl font-bold text-gray-900 leading-tight mb-2">
+              {article.title}
+            </h1>
+            <p className="text-gray-500 text-sm md:text-base">
+              {article.excerpt}
+            </p>
+          </div>
 
           {/* ===== Meta ===== */}
           <div className="px-6 md:px-10 pt-6">
@@ -101,76 +73,72 @@ export default function ArticlePage() {
 
             {/* ===== CTA ===== */}
             <div className="mt-12 relative rounded-2xl overflow-hidden shadow-2xl min-h-[350px]">
-  {/* ===== صورة الخلفية ===== */}
-  <img
-    src="/images/cta-bg.jpg"
-    alt="جرب Reels Generator"
-    className="absolute inset-0 w-full h-full object-cover"
-    loading="lazy"
-    onError={(e) => {
-      e.target.style.display = 'none';
-      e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
-    }}
-  />
+              <img
+                src="/images/cta-bg.jpg"
+                alt="جرب Reels Generator"
+                className="absolute inset-0 w-full h-full object-cover"
+                loading="lazy"
+                onError={(e) => {
+                  e.target.style.display = 'none';
+                  e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
+                }}
+              />
 
-  {/* ===== طبقة داكنة بنفسجية ===== */}
-  <div
-    className="absolute inset-0"
-    style={{
-      background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.88) 0%, rgba(88, 28, 135, 0.82) 50%, rgba(131, 24, 67, 0.88) 100%)'
-    }}
-  ></div>
+              <div
+                className="absolute inset-0"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.88) 0%, rgba(88, 28, 135, 0.82) 50%, rgba(131, 24, 67, 0.88) 100%)'
+                }}
+              ></div>
 
-  {/* ===== زخارف دائرية ===== */}
-  <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full filter blur-3xl"></div>
-  <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+              <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full filter blur-3xl"></div>
+              <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
 
-  {/* ===== المحتوى ===== */}
-  <div className="relative p-8 md:p-12 text-white text-center">
-    <div className="text-6xl mb-4 drop-shadow-2xl">🚀</div>
+              <div className="relative p-8 md:p-12 text-white text-center">
+                <div className="text-6xl mb-4 drop-shadow-2xl">🚀</div>
 
-    <h3 className="font-extrabold text-2xl md:text-3xl mb-3 drop-shadow-lg">
-      جرب Reels Generator الآن
-    </h3>
+                <h3 className="font-extrabold text-2xl md:text-3xl mb-3 drop-shadow-lg">
+                  جرب Reels Generator الآن
+                </h3>
 
-    <p className="text-white/95 text-base mb-8 max-w-md mx-auto leading-relaxed font-medium drop-shadow-lg">
-      حوّل أي Reel إلى 10 منشورات جاهزة مع صور احترافية بضغطة زر.
-    </p>
+                <p className="text-white/95 text-base mb-8 max-w-md mx-auto leading-relaxed font-medium drop-shadow-lg">
+                  حوّل أي Reel إلى 10 منشورات جاهزة مع صور احترافية بضغطة زر.
+                </p>
 
-    <Link
-      href="/"
-      className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-xl shadow-2xl hover:scale-110 transition-all duration-200"
-      style={{
-        background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-        color: '#1f2937',
-        boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
-      }}
-    >
-      <span>🚀</span>
-      <span>ابدأ مجاناً الآن</span>
-    </Link>
+                <Link
+                  href="/"
+                  className="inline-flex items-center gap-2 px-10 py-5 rounded-full font-extrabold text-xl shadow-2xl hover:scale-110 transition-all duration-200"
+                  style={{
+                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
+                    color: '#1f2937',
+                    boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
+                  }}
+                >
+                  <span>🚀</span>
+                  <span>ابدأ مجاناً الآن</span>
+                </Link>
 
-    {/* ===== مؤشرات الثقة ===== */}
-    <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs">
-      <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
-        <span className="text-green-400">✓</span>
-        <span className="text-white/90">مجاني 100%</span>
-      </div>
-      <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
-        <span className="text-green-400">✓</span>
-        <span className="text-white/90">بدون تسجيل</span>
-      </div>
-      <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
-        <span className="text-green-400">✓</span>
-        <span className="text-white/90">بدون بطاقة</span>
-      </div>
-    </div>
-  </div>
-</div>
+                <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs">
+                  <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-green-400">✓</span>
+                    <span className="text-white/90">مجاني 100%</span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-green-400">✓</span>
+                    <span className="text-white/90">بدون تسجيل</span>
+                  </div>
+                  <div className="flex items-center gap-1 bg-white/10 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                    <span className="text-green-400">✓</span>
+                    <span className="text-white/90">بدون بطاقة</span>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </article>
+
         {/* ===== Comments ===== */}
-<Comments title={article.title} identifier={article.slug} />
+        <Comments title={article.title} identifier={article.slug} />
 
         {/* ===== Related ===== */}
         <section className="mt-12">
@@ -211,4 +179,42 @@ export default function ArticlePage() {
       </div>
     </Layout>
   );
+}
+
+// ============================================================
+// توليد المسارات الثابتة لكل مقال على السيرفر (SSG)
+// ============================================================
+export async function getStaticPaths() {
+  const paths = blogArticlesList.map((article) => ({
+    params: { slug: article.slug },
+  }));
+
+  return {
+    paths,
+    fallback: false,
+  };
+}
+
+// ============================================================
+// جلب بيانات المقال على السيرفر وتمريرها للمكون
+// ============================================================
+export async function getStaticProps({ params }) {
+  const article = blogArticles[params.slug];
+
+  if (!article) {
+    return {
+      notFound: true,
+    };
+  }
+
+  const relatedArticles = blogArticlesList
+    .filter((a) => a.slug !== params.slug)
+    .slice(0, 3);
+
+  return {
+    props: {
+      article,
+      relatedArticles,
+    },
+  };
 }
