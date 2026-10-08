@@ -4,6 +4,8 @@ import Head from 'next/head';
 import { blogArticles, blogArticlesList } from '../../lib/blogData';
 import Comments from '../../components/Comments';
 
+
+
 const SITE_URL = 'https://sifouk04-generatorcd.vercel.app';
 
 export default function ArticlePage({ article, relatedArticles }) {
@@ -53,25 +55,90 @@ export default function ArticlePage({ article, relatedArticles }) {
     "inLanguage": "ar"
   };
 
+    const breadcrumbSchema = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "الرئيسية",
+        "item": SITE_URL
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "الأخبار",
+        "item": `${SITE_URL}/blog`
+      },
+      {
+        "@type": "ListItem",
+        "position": 3,
+        "name": article.category,
+        "item": `${SITE_URL}/blog?category=${encodeURIComponent(article.category)}`
+      },
+      {
+        "@type": "ListItem",
+        "position": 4,
+        "name": article.title,
+        "item": `${SITE_URL}/blog/${article.slug}`
+      }
+    ]
+  };
+
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
-        />
-      </Head>
+    <Head>
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+  />
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+  />
+</Head>
 
       <Layout title={article.title} description={article.excerpt}>
         <div className="max-w-4xl mx-auto px-4 py-12">
 
-          <nav className="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <Link href="/" className="hover:text-indigo-600 transition">الرئيسية</Link>
-            <span>›</span>
-            <Link href="/blog" className="hover:text-indigo-600 transition">المدونة</Link>
-            <span>›</span>
-            <span className="text-gray-700 font-medium line-clamp-1">{article.category}</span>
-          </nav>
+        {/* ===== Breadcrumbs محسّنة ===== */}
+<nav aria-label="Breadcrumb" className="mb-6">
+  <ol className="flex flex-wrap items-center gap-2 text-sm text-gray-600">
+    <li>
+      <Link href="/" className="hover:text-indigo-600 transition inline-flex items-center gap-1">
+        <span>🏠</span>
+        <span>الرئيسية</span>
+      </Link>
+    </li>
+    <li aria-hidden="true" className="text-gray-400">›</li>
+    <li>
+      <Link href="/blog" className="hover:text-indigo-600 transition inline-flex items-center gap-1">
+        <span>📰</span>
+        <span>الأخبار</span>
+      </Link>
+    </li>
+    <li aria-hidden="true" className="text-gray-400">›</li>
+    <li>
+      <Link
+        href={`/blog?category=${encodeURIComponent(article.category)}`}
+        className="hover:text-indigo-600 transition inline-flex items-center gap-1"
+      >
+        <span>🏷️</span>
+        <span>{article.category}</span>
+      </Link>
+    </li>
+    <li aria-hidden="true" className="text-gray-400">›</li>
+    <li>
+      <span
+        className="text-gray-800 font-medium line-clamp-1 max-w-[200px] md:max-w-md"
+        aria-current="page"
+      >
+        {article.title}
+      </span>
+    </li>
+  </ol>
+</nav>
 
           <article className="bg-white rounded-3xl shadow-xl overflow-hidden">
 
@@ -173,40 +240,68 @@ export default function ArticlePage({ article, relatedArticles }) {
 
           <Comments title={article.title} identifier={article.slug} />
 
-          <section className="mt-12">
-            <h2 className="text-2xl font-bold text-gray-800 mb-6 flex items-center gap-2">
-              <span className="w-1 h-6 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
-              📖 اقرأ أيضاً
-            </h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-              {relatedArticles.map((art) => (
-                <Link
-                  key={art.slug}
-                  href={`/blog/${art.slug}`}
-                  className="group bg-white rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden hover:-translate-y-1 duration-300 flex flex-col"
-                >
-                  <div className="relative w-full aspect-[16/10] overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
-                    <img
-                      src={art.image}
-                      alt={art.title}
-                      className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition duration-500"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-                    <span className="absolute top-2 right-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] font-bold px-2 py-1 rounded-full">
-                      {art.category}
-                    </span>
-                  </div>
+          <section className="mt-16">
+  <div className="flex items-center justify-between mb-6">
+    <h2 className="text-2xl md:text-3xl font-bold text-gray-800 flex items-center gap-3">
+      <span className="w-1.5 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+      <span>📖</span>
+      <span>مقالات ذات صلة</span>
+    </h2>
+    <Link
+      href="/blog"
+      className="hidden md:inline-flex items-center gap-1 text-sm font-bold text-indigo-600 hover:text-indigo-800 transition"
+    >
+      <span>عرض الكل</span>
+      <span>←</span>
+    </Link>
+  </div>
 
-                  <div className="p-4 flex flex-col flex-1">
-                    <h3 className="font-bold text-gray-800 group-hover:text-indigo-600 transition line-clamp-2 text-sm leading-snug min-h-[40px]">
-                      {art.title}
-                    </h3>
-                    <p className="text-xs text-gray-600 mt-2">{art.date}</p>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          </section>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+    {relatedArticles.map((art) => (
+      <Link
+        key={art.slug}
+        href={`/blog/${art.slug}`}
+        className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all overflow-hidden hover:-translate-y-1 duration-300 flex flex-col border border-gray-100"
+      >
+        <div className="relative w-full aspect-[16/10] overflow-hidden bg-gradient-to-br from-indigo-100 to-purple-100">
+          <img
+            src={art.image}
+            alt={art.title}
+            className="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-110 transition duration-500"
+            loading="lazy"
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
+          <span className="absolute top-2 right-2 bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-lg">
+            {art.category}
+          </span>
+          <span className="absolute bottom-2 left-2 text-white text-[10px] font-medium bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full flex items-center gap-1">
+            ⏱️ {art.readTime}
+          </span>
+        </div>
+
+        <div className="p-4 flex flex-col flex-1">
+          <h3 className="font-bold text-gray-800 group-hover:text-indigo-600 transition line-clamp-2 text-sm leading-snug min-h-[40px]">
+            {art.title}
+          </h3>
+          <p className="text-xs text-gray-600 mt-2 flex items-center gap-1">
+            <span>📅</span>
+            <span>{art.date}</span>
+          </p>
+        </div>
+      </Link>
+    ))}
+  </div>
+
+  <div className="mt-6 text-center md:hidden">
+    <Link
+      href="/blog"
+      className="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-bold rounded-full text-sm shadow-lg hover:shadow-xl transition"
+    >
+      <span>عرض كل المقالات</span>
+      <span>←</span>
+    </Link>
+  </div>
+</section>
 
         </div>
       </Layout>
@@ -235,8 +330,8 @@ export async function getStaticProps({ params }) {
   }
 
   const relatedArticles = blogArticlesList
-    .filter((a) => a.slug !== params.slug)
-    .slice(0, 3);
+  .filter((a) => a.slug !== params.slug)
+  .slice(0, 6);
 
   return {
     props: {

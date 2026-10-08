@@ -27,26 +27,32 @@ export default function Layout({
   }, []);
 
   const navLinks = [
-  { href: '/', label: 'الرئيسية' },
- 
-{
-  href: '/blog?section=all',
-  label: 'التصنيفات',
-  
-  dropdown: [
-    { href: '/blog?category=تكنولوجيا', label: 'تكنولوجيا' },
-    { href: '/blog?category=هواتف ذكية', label: 'هواتف ذكية' },
-    { href: '/blog?category=تطبيقات وبرامج', label: 'تطبيقات وبرامج' },
-    { href: '/blog?category=ذكاء اصطناعي', label: 'ذكاء اصطناعي' },
-    { href: '/blog?category=كيف', label: 'كيف' },
-    { href: '/blog?category=سوشيال ميديا', label: 'سوشيال ميديا' },
-    { href: '/blog?category=تسويق', label: 'تسويق' },
-    { href: '/blog?category=تصميم', label: 'تصميم' },
-  ]
-},
- 
-  { href: '/about', label: 'من نحن' },
-  { href: '/contact', label: 'تواصل معنا' },
+  { href: '/', label: 'الرئيسية', icon: '' },
+  {
+    href: '/blog',
+    label: 'أخبار تقنية',
+    icon: '',
+    dropdown: [
+      { href: '/blog?category=تكنولوجيا', label: 'تكنولوجيا', icon: '' },
+      { href: '/blog?category=ذكاء اصطناعي', label: 'ذكاء اصطناعي', icon: '' },
+      { href: '/blog?category=سوشيال ميديا', label: 'سوشيال ميديا', icon: '' },
+    ]
+  },
+  {
+    href: '/blog?section=apps',
+    label: 'التصنيفات',
+    icon: '',
+    dropdown: [
+      { href: '/blog?category=هواتف ذكية', label: 'الهواتف الذكية', icon: '' },
+      { href: '/blog?category=تطبيقات وبرامج', label: 'التطبيقات والبرامج', icon: '' },
+      { href: '/blog?category=كيف', label: 'كيف', icon: '' },
+      { href: '/blog?category=تسويق', label: 'تسويق', icon: '' },
+      { href: '/blog?category=تصميم', label: 'تصميم', icon: '' },
+    ]
+  },
+  { href: '/varied', label: 'مواضيع متنوعة', icon: '' },  // ← ✅ جديد
+  { href: '/about', label: 'من نحن', icon: '' },
+  { href: '/contact', label: 'تواصل معنا', icon: '' },
 ];
 
   const isActive = (href) => {
@@ -370,6 +376,14 @@ export default function Layout({
                     <span className="text-xs">→</span> الرئيسية
                   </Link>
                 </li>
+                
+                <li>
+  <Link href="/archive" className="text-gray-200 hover:text-white transition inline-flex items-center gap-2">
+    <span className="text-xs">→</span>
+    الأرشيف
+  </Link>
+</li>
+
                 <li>
                   <Link href="/blog" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> الأخبار

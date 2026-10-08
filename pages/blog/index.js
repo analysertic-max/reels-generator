@@ -6,7 +6,7 @@ import Sidebar from '../../components/Sidebar';
 import NewsTicker from '../../components/NewsTicker';
 import { blogArticlesList } from '../../lib/blogData';
 
-const ARTICLES_PER_PAGE = 6;
+const ARTICLES_PER_PAGE = 9;
 
 export default function BlogIndex() {
   const router = useRouter();

@@ -205,5 +205,10 @@
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
+    <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/archive</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
 
 </urlset>
