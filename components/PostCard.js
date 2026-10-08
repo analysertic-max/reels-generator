@@ -194,7 +194,7 @@ export default function PostCard({ post, index }) {
           }
           className={`flex-1 py-2 rounded-md text-sm font-medium transition focus:outline-none focus:ring-2 focus:ring-offset-1 ${
             imageUrl
-              ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+              ? 'bg-gray-200 text-gray-600 cursor-not-allowed'
               : 'bg-purple-600 hover:bg-purple-700 text-white focus:ring-purple-400'
           } disabled:opacity-60`}
         >

@@ -224,7 +224,7 @@ if (searchQuery.trim()) {
                       <p className="text-gray-600 text-sm mb-4 leading-relaxed line-clamp-3 flex-1">
                         {article.excerpt}
                       </p>
-                      <div className="flex items-center justify-between text-xs text-gray-400 border-t pt-3">
+                      <div className="flex items-center justify-between text-xs text-gray-600 border-t pt-3">
                         <div className="flex items-center gap-3">
                           <span className="flex items-center gap-1">📅 {article.date}</span>
                           <span className="flex items-center gap-1">⏱️ {article.readTime}</span>

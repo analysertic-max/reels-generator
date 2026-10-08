@@ -4,6 +4,8 @@ import Layout from '../components/Layout';
 import NewsTicker from '../components/NewsTicker';
 import { blogArticlesList } from '../lib/blogData';
 import TrendingTabs from '../components/TrendingTabs';
+import Head from 'next/head';
+
 
 export default function Home() {
   // ترتيب المقالات حسب التاريخ (الأحدث أولاً)
@@ -11,35 +13,25 @@ export default function Home() {
     (a, b) => new Date(b.date) - new Date(a.date)
   );
 
-  const tools = [
-    {
-      icon: '🎬',
-      title: 'مولد منشورات من Reels',
-      description: 'حوّل أي Reel إلى منشورات تفاعلية جاهزة للنشر في مجموعات فيسبوك.',
-      href: '/tools/reels-generator',
-      color: 'from-indigo-500 to-purple-600',
-      badge: 'متاح',
-      badgeColor: 'from-green-400 to-emerald-500',
-    },
-    {
-      icon: '✍️',
-      title: 'كاتب المحتوى',
-      description: 'توليد نصوص ومقالات احترافية بالذكاء الاصطناعي في ثوانٍ.',
-      href: '#',
-      color: 'from-emerald-500 to-teal-600',
-      badge: 'قريباً',
-      badgeColor: 'from-amber-400 to-orange-500',
-    },
-    {
-      icon: '📊',
-      title: 'محلل الهاشتاغات',
-      description: 'اختر أفضل الهاشتاغات لمنشوراتك بناءً على تحليل ذكي.',
-      href: '#',
-      color: 'from-amber-500 to-orange-600',
-      badge: 'قريباً',
-      badgeColor: 'from-amber-400 to-orange-500',
-    },
-  ];
+<Head>
+  <script
+    type="application/ld+json"
+    dangerouslySetInnerHTML={{
+      __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "نبض التقنية",
+        "url": "https://sifou.k04-generatorcd.vercel.app",
+        "description": "منصة عربية لنشر آخر أخبار التكنولوجيا والذكاء الاصطناعي",
+        "inLanguage": "ar",
+        "publisher": {
+          "@type": "Organization",
+          "name": "نبض التقنية"
+        }
+      })
+    }}
+  />
+</Head>
 
   return (
     <Layout
@@ -76,18 +68,15 @@ export default function Home() {
           <div className="relative h-full flex items-center justify-center px-6 py-8 md:py-10">
             <div className="text-center text-white max-w-3xl mx-auto">
 
-              {/* الشعار المصغّر */}
-              <div className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md px-4 py-1.5 rounded-full text-xs font-bold mb-4 border border-white/40">
-                📰 نبض التقنية
-              </div>
+             
 
               <h1 className="text-2xl md:text-4xl font-black mb-3 leading-tight drop-shadow-xl">
                 كل ما يخص التقنية في مكان واحد
               </h1>
 
-              <p className="text-sm md:text-base text-white/95 max-w-xl mx-auto leading-relaxed mb-5 font-medium">
-                تابع آخر أخبار التكنولوجيا + استخدم أدواتنا المجانية لإنشاء محتوى احترافي
-              </p>
+             <p className="text-sm md:text-base text-white/95 max-w-xl mx-auto leading-relaxed mb-5 font-medium">
+  تابع آخر أخبار التكنولوجيا والذكاء الاصطناعي والهواتف الذكية
+</p>
 
               <div className="flex flex-wrap gap-3 justify-center mb-4">
                 <Link
@@ -102,17 +91,7 @@ export default function Home() {
                   <span>تصفح الأخبار</span>
                 </Link>
 
-                <Link
-                  href="/tools"
-                  className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-full font-bold text-sm shadow-xl hover:scale-105 transition-all"
-                  style={{
-                    background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                    color: '#1f2937',
-                  }}
-                >
-                  <span>🛠️</span>
-                  <span>جرّب الأدوات</span>
-                </Link>
+               
               </div>
 
               <div className="flex flex-wrap justify-center gap-2 text-xs text-white/85">
@@ -225,7 +204,7 @@ export default function Home() {
                     <h3 className="text-sm font-bold text-gray-800 group-hover:text-indigo-600 transition line-clamp-3 leading-snug">
                       {article.title}
                     </h3>
-                    <div className="flex items-center gap-2 text-[11px] text-gray-400 mt-2">
+                    <div className="flex items-center gap-2 text-[11px] text-gray-600 mt-2">
                       <span className="flex items-center gap-1">
                         📅 {article.date}
                       </span>
@@ -258,112 +237,212 @@ export default function Home() {
           <TrendingTabs />
         </section>
 
-        {/* ===== قسم الأدوات ===== */}
-        <section className="mb-16">
-          <div className="flex items-center justify-between mb-8">
-            <div className="flex items-center gap-3">
-              <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-purple-600 rounded-full"></span>
-              <h2 className="text-3xl md:text-4xl font-black text-gray-800">
-                🛠️ أدواتنا الذكية
-              </h2>
-            </div>
-            <Link
-              href="/tools"
-              className="text-pink-600 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all"
-            >
-              <span>كل الأدوات</span>
-              <span>←</span>
-            </Link>
+        
+        {/* ===== قسم لماذا نبض التقنية - مُحسّن SEO ===== */}
+<section className="mb-16">
+  <div className="text-center mb-10">
+    <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-3">
+      لماذا تختار نبض التقنية لمتابعة أخبار التكنولوجيا؟
+    </h2>
+    <p className="text-gray-600 max-w-3xl mx-auto leading-relaxed">
+      منصة عربية متخصصة في تغطية آخر مستجدات التقنية والذكاء الاصطناعي والهواتف الذكية،
+      بمحتوى أصلي موثوق يخدم القارئ العربي.
+    </p>
+  </div>
+
+  {/* بطاقات الميزات */}
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-gray-100 hover:-translate-y-1">
+      <div className="w-20 h-20 mb-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+        ✅
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-3">
+        محتوى عربي أصلي 100%
+      </h3>
+      <p className="text-gray-600 leading-relaxed text-sm">
+        كل مقال يُكتب بعناية من فريقنا المختص، بمعلومات دقيقة من مصادر موثوقة،
+        بلغة عربية واضحة تناسب الجميع.
+      </p>
+    </div>
+
+    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-gray-100 hover:-translate-y-1">
+      <div className="w-20 h-20 mb-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+        📱
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-3">
+        تغطية شاملة ومتنوعة
+      </h3>
+      <p className="text-gray-600 leading-relaxed text-sm">
+        من الهواتف الذكية إلى التطبيقات والبرامج، ومن الذكاء الاصطناعي إلى شروحات "كيف"،
+        تجد كل ما يهمك في مكان واحد.
+      </p>
+    </div>
+
+    <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 border border-gray-100 hover:-translate-y-1">
+      <div className="w-20 h-20 mb-5 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
+        🔄
+      </div>
+      <h3 className="text-xl font-bold text-gray-800 mb-3">
+        تحديث يومي مستمر
+      </h3>
+      <p className="text-gray-600 leading-relaxed text-sm">
+        نواكب آخر المستجدات التقنية يومياً، لتصلك الأخبار لحظة بلحظة وتبقى دائماً
+        على اطلاع بما يحدث في عالم التكنولوجيا.
+      </p>
+    </div>
+  </div>
+
+  {/* ===== فقرة SEO غنية ===== */}
+  <div className="bg-white rounded-2xl shadow-lg p-6 md:p-10 border border-gray-100">
+    <div className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-5">
+
+      <p className="text-base md:text-lg">
+        <strong>نبض التقنية</strong> هي منصة عربية متخصصة في نشر أخبار التكنولوجيا الحديثة
+        ومراجعات الأجهزة الإلكترونية، وتهدف إلى تبسيط المحتوى التقني للقارئ العربي
+        بمختلف مستوياته. نغطي مجموعة واسعة من المواضيع التي تشمل:
+      </p>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+        <div className="flex items-start gap-3 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-4 border-r-4 border-blue-500">
+          <span className="text-2xl">💻</span>
+          <div>
+            <strong className="text-gray-800">أخبار التكنولوجيا:</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              آخر تطورات الشركات الكبرى مثل Apple و Samsung و Google.
+            </span>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {tools.map((tool) => (
-              <Link
-                key={tool.title}
-                href={tool.href}
-                className="group relative bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden border border-gray-100 hover:-translate-y-2 flex flex-col"
-              >
-                {tool.badge && (
-                  <span className={`absolute top-3 left-3 z-10 bg-gradient-to-r ${tool.badgeColor} text-white text-[10px] font-bold px-2.5 py-1 rounded-full shadow-md`}>
-                    {tool.badge}
-                  </span>
-                )}
-
-                <div className={`relative h-40 bg-gradient-to-br ${tool.color} flex items-center justify-center overflow-hidden`}>
-                  <div className="absolute inset-0 opacity-20">
-                    <div className="absolute top-0 right-0 w-32 h-32 bg-white rounded-full filter blur-2xl"></div>
-                  </div>
-                  <span className="relative text-7xl drop-shadow-2xl group-hover:scale-125 transition-transform duration-500">
-                    {tool.icon}
-                  </span>
-                </div>
-
-                <div className="p-5 flex flex-col flex-1">
-                  <h3 className="text-lg font-bold text-gray-800 mb-2 group-hover:text-indigo-600 transition">
-                    {tool.title}
-                  </h3>
-                  <p className="text-gray-600 text-sm leading-relaxed flex-1">
-                    {tool.description}
-                  </p>
-                  <div className="mt-4 flex items-center text-indigo-600 font-bold text-sm">
-                    <span>استخدم الآن</span>
-                    <span className="mr-1 group-hover:translate-x-[-4px] transition-transform">←</span>
-                  </div>
-                </div>
-              </Link>
-            ))}
+        <div className="flex items-start gap-3 bg-gradient-to-r from-cyan-50 to-blue-50 rounded-xl p-4 border-r-4 border-cyan-500">
+          <span className="text-2xl">📱</span>
+          <div>
+            <strong className="text-gray-800">الهواتف الذكية:</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              مراجعات ومقارنات لأحدث الهواتف مع الأسعار والمواصفات.
+            </span>
           </div>
-        </section>
+        </div>
 
-        {/* ===== قسم لماذا نحن ===== */}
-        <section className="mb-16">
-          <div className="text-center mb-10">
-            <h2 className="text-3xl md:text-4xl font-black text-gray-800 mb-3">
-              ✨ لماذا نبض التقنية؟
-            </h2>
-            <p className="text-gray-600 max-w-2xl mx-auto">
-              منصة عربية شاملة تجمع الأخبار والأدوات في مكان واحد
-            </p>
+        <div className="flex items-start gap-3 bg-gradient-to-r from-purple-50 to-fuchsia-50 rounded-xl p-4 border-r-4 border-purple-500">
+          <span className="text-2xl">🤖</span>
+          <div>
+            <strong className="text-gray-800">الذكاء الاصطناعي:</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              شرح أدوات AI وكيفية استخدامها في الحياة اليومية والعمل.
+            </span>
           </div>
+        </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
-              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
-                ✅
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                محتوى عربي 100%
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                مقالات وأدوات مصممة خصيصاً للمحتوى العربي بجودة عالية.
-              </p>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
-              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
-                🆓
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                أدوات مجانية بدون تسجيل
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                استخدم كل الأدوات مجاناً، بدون حساب ولا بطاقة بنكية.
-              </p>
-            </div>
-
-            <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-8 text-center border border-gray-100 hover:-translate-y-1">
-              <div className="w-20 h-20 mx-auto mb-5 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-4xl shadow-lg group-hover:scale-110 transition-transform">
-                🔄
-              </div>
-              <h3 className="text-xl font-bold text-gray-800 mb-3">
-                تحديث يومي
-              </h3>
-              <p className="text-gray-600 leading-relaxed text-sm">
-                محتوى جديد وأخبار محدّثة يومياً لتبقى على اطلاع دائم.
-              </p>
-            </div>
+        <div className="flex items-start gap-3 bg-gradient-to-r from-emerald-50 to-teal-50 rounded-xl p-4 border-r-4 border-emerald-500">
+          <span className="text-2xl">🛠️</span>
+          <div>
+            <strong className="text-gray-800">شروحات "كيف":</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              دروس عملية خطوة بخطوة لحل المشاكل التقنية.
+            </span>
           </div>
-        </section>
+        </div>
+
+        <div className="flex items-start gap-3 bg-gradient-to-r from-amber-50 to-orange-50 rounded-xl p-4 border-r-4 border-amber-500">
+          <span className="text-2xl">💾</span>
+          <div>
+            <strong className="text-gray-800">التطبيقات والبرامج:</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              أفضل التطبيقات المجانية والمدفوعة لجميع الأجهزة.
+            </span>
+          </div>
+        </div>
+
+        <div className="flex items-start gap-3 bg-gradient-to-r from-pink-50 to-rose-50 rounded-xl p-4 border-r-4 border-pink-500">
+          <span className="text-2xl">📈</span>
+          <div>
+            <strong className="text-gray-800">نصائح التسويق الرقمي:</strong>
+            <span className="text-gray-600 text-sm block mt-1">
+              استراتيجيات فعّالة لصناع المحتوى وأصحاب المشاريع.
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <h3 className="text-xl font-bold text-gray-800 mt-6">
+        لماذا يثق القراء العرب في نبض التقنية؟
+      </h3>
+
+      <ul className="space-y-3 mr-6">
+        <li className="flex items-start gap-2">
+          <span className="text-green-500 font-bold mt-1">✓</span>
+          <span>
+            <strong>محتوى أصلي 100%:</strong> كل مقال مكتوب حصرياً لموقعنا،
+            وليس منقولاً أو مُترجَماً آلياً.
+          </span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-green-500 font-bold mt-1">✓</span>
+          <span>
+            <strong>لغة عربية واضحة:</strong> نشرح المواضيع التقنية بلغة
+            يفهمها المبتدئ، دون المساس بدقة المعلومات.
+          </span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-green-500 font-bold mt-1">✓</span>
+          <span>
+            <strong>محتوى عملي:</strong> لا نكتفي بالأخبار، بل نقدم نصائح
+            قابلة للتطبيق فوراً.
+          </span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-green-500 font-bold mt-1">✓</span>
+          <span>
+            <strong>مجاني بالكامل:</strong> كل المحتوى متاح مجاناً، دون
+            تسجيل أو اشتراكات إجبارية.
+          </span>
+        </li>
+        <li className="flex items-start gap-2">
+          <span className="text-green-500 font-bold mt-1">✓</span>
+          <span>
+            <strong>تحديث يومي:</strong> ننشر مقالات جديدة بشكل منتظم
+            لتبقى على اطلاع دائم.
+          </span>
+        </li>
+      </ul>
+
+      <h3 className="text-xl font-bold text-gray-800 mt-6">
+        لمن هذا الموقع؟
+      </h3>
+
+      <p>
+        <strong>نبض التقنية</strong> موجّه لجميع القراء العرب المهتمين بعالم التكنولوجيا، سواء كنت:
+      </p>
+
+      <ul className="list-disc mr-6 space-y-2">
+        <li>مستخدم عادي يريد فهم الأجهزة التقنية قبل الشراء.</li>
+        <li>طالب أو متعلم يبحث عن شروحات مبسطة.</li>
+        <li>صاحب مشروع يريد متابعة آخر أخبار التقنية.</li>
+        <li>صانع محتوى يبحث عن أفكار ومعلومات موثوقة.</li>
+        <li>مهتم بالذكاء الاصطناعي وأدواته الحديثة.</li>
+      </ul>
+
+      <h3 className="text-xl font-bold text-gray-800 mt-6">
+        التزامنا تجاه القارئ العربي
+      </h3>
+
+      <p>
+        نلتزم في <strong>نبض التقنية</strong> بتقديم محتوى تقني عربي بمعايير
+        عالمية، يجمع بين الدقة والوضوح والفائدة العملية. هدفنا أن نصبح
+        <strong> المرجع العربي الأول</strong> في تبسيط التقنية، وأن نساهم
+        في سد الفجوة بين المحتوى التقني الأجنبي والقارئ العربي.
+      </p>
+
+      <p className="bg-gradient-to-r from-indigo-50 to-purple-50 rounded-xl p-5 border-r-4 border-indigo-500 font-medium">
+        📧 <strong>هل لديك سؤال أو اقتراح؟</strong> نرحب بتواصلك معنا عبر
+        صفحة <a href="/contact" className="text-indigo-600 hover:underline font-bold">اتصل بنا</a>.
+        رأيك يهمنا لتطوير المحتوى وتحسين تجربتك.
+      </p>
+
+    </div>
+  </div>
+</section>
+
 
         {/* ===== CTA النهائي ===== */}
         <section className="relative rounded-3xl overflow-hidden shadow-2xl mb-12 min-h-[350px]">
@@ -408,7 +487,7 @@ export default function Home() {
             </h3>
 
             <p className="text-white/95 text-lg mb-8 max-w-xl mx-auto drop-shadow-lg">
-              تصفح الأخبار، جرّب الأدوات، وطوّر مهاراتك التقنية مع نبض التقنية.
+              تصفح الأخبار، وطوّر مهاراتك ومعارفك التقنية مع نبض التقنية.
             </p>
 
             <div className="flex flex-wrap gap-4 justify-center">
@@ -425,18 +504,7 @@ export default function Home() {
                 <span>تصفح الأخبار</span>
               </Link>
 
-              <Link
-                href="/tools"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #fbbf24, #f59e0b)',
-                  color: '#1f2937',
-                  boxShadow: '0 15px 40px rgba(251, 191, 36, 0.6)',
-                }}
-              >
-                <span>🛠️</span>
-                <span>جرّب الأدوات</span>
-              </Link>
+              
             </div>
           </div>
         </section>

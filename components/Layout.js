@@ -44,7 +44,7 @@ export default function Layout({
     { href: '/blog?category=تصميم', label: 'تصميم' },
   ]
 },
-  { href: '/tools', label: 'الأدوات' },
+ 
   { href: '/about', label: 'من نحن' },
   { href: '/contact', label: 'تواصل معنا' },
 ];
@@ -198,12 +198,13 @@ export default function Layout({
       </button>
 
       {/* CTA */}
-      <Link
-        href="/tools"
-        className="bg-white text-indigo-700 px-4 py-2 rounded-full text-xs font-black hover:shadow-xl hover:scale-105 transition-all hidden md:block"
-      >
-        ✨ جرّب
-      </Link>
+     {/* CTA */}
+<Link
+  href="/blog"
+  className="bg-white text-indigo-700 px-4 py-2 rounded-full text-xs font-black hover:shadow-xl hover:scale-105 transition-all hidden md:block"
+>
+  📰 الأخبار
+</Link>
     </div>
 
     {/* Mobile Menu Button */}
@@ -365,22 +366,22 @@ export default function Layout({
               </h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> الرئيسية
                   </Link>
                 </li>
                 <li>
-                  <Link href="/blog" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/blog" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> الأخبار
                   </Link>
                 </li>
                 <li>
-                  <Link href="/tools" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/tools" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> الأدوات
                   </Link>
                 </li>
                 <li>
-                  <Link href="/about" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/about" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> من نحن
                   </Link>
                 </li>
@@ -394,17 +395,17 @@ export default function Layout({
               </h3>
               <ul className="space-y-2 text-sm">
                 <li>
-                  <Link href="/privacy" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/privacy" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> سياسة الخصوصية
                   </Link>
                 </li>
                 <li>
-                  <Link href="/terms" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/terms" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> الشروط والأحكام
                   </Link>
                 </li>
                 <li>
-                  <Link href="/disclaimer" className="text-gray-400 hover:text-white transition inline-flex items-center gap-2">
+                  <Link href="/disclaimer" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> إخلاء المسؤولية
                   </Link>
                 </li>

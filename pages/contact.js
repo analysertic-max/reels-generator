@@ -267,7 +267,7 @@ export default function Contact() {
                   {status === 'sending' ? '⏳ جاري الإرسال...' : '📤 إرسال الرسالة'}
                 </button>
 
-                <p className="text-xs text-gray-400 text-center">
+                <p className="text-xs text-gray-600 text-center">
                   🔒 معلوماتك محفوظة ولن تتم مشاركتها مع أي طرف ثالث.
                 </p>
               </form>
