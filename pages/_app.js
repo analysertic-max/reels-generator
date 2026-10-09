@@ -21,7 +21,7 @@ export default function App({ Component, pageProps }) {
   return (
     <div className={`${cairo.variable} ${tajawal.variable} font-sans`}>
       <Head>
-        <meta name="google-site-verification" content="google67de9af6edccbfdd.html" />
+        <meta name="google-site-verification" content="1Cv4XDA7NX1_as_XjjEvzSoelqWSMPtGzMmBB6_pBA0" />
         <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX" />
       </Head>
 
