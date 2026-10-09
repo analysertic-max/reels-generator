@@ -7,6 +7,7 @@ import TrendingTabs from '../components/TrendingTabs';
 import Head from 'next/head';
 
 
+
 export default function Home() {
   // ترتيب المقالات حسب التاريخ (الأحدث أولاً)
   const sortedArticles = [...blogArticlesList].sort(

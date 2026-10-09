@@ -21,11 +21,30 @@ export default function App({ Component, pageProps }) {
   return (
     <div className={`${cairo.variable} ${tajawal.variable} font-sans`}>
       <Head>
+        {/* Google Search Console Verification */}
         <meta name="google-site-verification" content="1Cv4XDA7NX1_as_XjjEvzSoelqWSMPtGzMmBB6_pBA0" />
-        <meta name="google-adsense-account" content="ca-pub-XXXXXXXXXXXXXXXX" />
+
+       
       </Head>
 
-      {/* منع وميض الوضع الليلي */}
+      {/* ===== Google Analytics (gtag.js) ===== */}
+      <Script
+        async
+        src="https://www.googletagmanager.com/gtag/js?id=G-VMD7X77GTQ"
+        strategy="afterInteractive"
+      />
+      <Script id="google-analytics" strategy="afterInteractive">
+        {`
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){dataLayer.push(arguments);}
+          gtag('js', new Date());
+          gtag('config', 'G-VMD7X77GTQ');
+        `}
+      </Script>
+
+      
+
+      {/* ===== منع وميض الوضع الليلي ===== */}
       <Script id="dark-mode-init" strategy="beforeInteractive">
         {`
           try {
@@ -38,12 +57,6 @@ export default function App({ Component, pageProps }) {
         `}
       </Script>
 
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
       <Component {...pageProps} />
     </div>
   );

@@ -210,5 +210,40 @@
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
+   <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/varied</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/best-travel-destinations-2026</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+   <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/morning-habits-success</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+   <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/how-to-save-money</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <url>
+     <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/healthy-food-tips</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <url>
+        <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/start-small-business</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <url>
+       <url>
+    <loc>https://sifouk04-generatorcd.vercel.app/blog/learn-language-fast</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+    <url>
 
 </urlset>

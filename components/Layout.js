@@ -6,6 +6,7 @@ import Logo from './Logo';
 import ScrollToTop from './ScrollToTop';
 import DarkModeToggle from './DarkModeToggle';
 
+
 export default function Layout({
   children,
   title = 'نبض التقنية',
