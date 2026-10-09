@@ -390,11 +390,7 @@ export default function Layout({
                     <span className="text-xs">→</span> الأخبار
                   </Link>
                 </li>
-                <li>
-                  <Link href="/tools" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
-                    <span className="text-xs">→</span> الأدوات
-                  </Link>
-                </li>
+               
                 <li>
                   <Link href="/about" className="text-gray-600 hover:text-white transition inline-flex items-center gap-2">
                     <span className="text-xs">→</span> من نحن
