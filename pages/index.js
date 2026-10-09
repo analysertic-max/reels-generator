@@ -61,14 +61,16 @@ export default function Home() {
       {/* ===== Hero Section - Full Width ===== */}
       <section className="relative w-full overflow-hidden shadow-xl min-h-[320px] md:min-h-[400px]">
         {/* صورة الخلفية */}
-        <Image
-          src="/images/logo.jpg"
-          alt="نبض التقنية - آخر الأخبار التقنية"
-          fill
-          priority
-          sizes="100vw"
-          className="object-cover"
-        />
+        <img
+  src="/images/logo.jpg"
+  alt="نبض التقنية - آخر الأخبار التقنية"
+  className="absolute inset-0 w-full h-full object-cover"
+  loading="eager"
+  onError={(e) => {
+    e.target.style.display = 'none';
+    e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
+  }}
+/>
 
         {/* طبقة التدرج */}
         <div
@@ -101,11 +103,22 @@ export default function Home() {
                   color: '#ffffff',
                 }}
               >
-                <span>📰</span>
+               
                 <span>تصفح الأخبار</span>
               </Link>
 
-             
+              <Link
+                href="/varied"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base shadow-xl hover:scale-105 transition-all"
+                style={{
+                  background: 'linear-gradient(135deg, #10b981, #059669)',
+                  color: '#ffffff',
+                }}
+              >
+                
+                
+                <span>مواضيع متنوعة</span>
+              </Link>
             </div>
 
           
