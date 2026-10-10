@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Head from 'next/head';
@@ -7,10 +8,23 @@ import TrendingTabs from '../components/TrendingTabs';
 import { blogArticlesList } from '../lib/blogData';
 
 export default function Home() {
+ const [activeSlide, setActiveSlide] = useState(0);
+
   // ترتيب المقالات حسب التاريخ (الأحدث أولاً)
   const sortedArticles = [...blogArticlesList].sort(
     (a, b) => new Date(b.date) - new Date(a.date)
   );
+
+    const featuredArticles = sortedArticles.slice(0, 4);
+
+      // تغيير تلقائي كل 6 ثوانٍ
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveSlide((prev) => (prev + 1) % featuredArticles.length);
+    }, 6000);
+
+    return () => clearInterval(interval);
+  }, [featuredArticles.length])
 
   // التصنيفات الأساسية
   const MAIN_CATEGORIES = [
@@ -58,74 +72,62 @@ export default function Home() {
       {/* ===== شريط الأخبار - Full Width ===== */}
       <NewsTicker />
 
-      {/* ===== Hero Section - Full Width ===== */}
-      <section className="relative w-full overflow-hidden shadow-xl min-h-[320px] md:min-h-[400px]">
-        {/* صورة الخلفية */}
-        <img
-  src="/images/logo.jpg"
-  alt="نبض التقنية - آخر الأخبار التقنية"
-  className="absolute inset-0 w-full h-full object-cover"
-  loading="eager"
-  onError={(e) => {
-    e.target.style.display = 'none';
-    e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
-  }}
-/>
+   {/* ===== Hero Section - بصورة بدون أزرار ===== */}
+<section className="relative w-full overflow-hidden shadow-lg min-h-[220px] md:min-h-[260px]">
 
-        {/* طبقة التدرج */}
-        <div
-          className="absolute inset-0"
-          style={{
-            background: 'linear-gradient(135deg, rgba(49, 46, 129, 0.88) 0%, rgba(88, 28, 135, 0.82) 50%, rgba(131, 24, 67, 0.88) 100%)'
-          }}
-        ></div>
+  {/* الصورة الخلفية */}
+  <img
+    src="/images/logo.jpg"
+    alt="نبض التقنية"
+    className="absolute inset-0 w-full h-full object-cover"
+    loading="eager"
+    onError={(e) => {
+      e.target.style.display = 'none';
+      e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
+    }}
+  />
 
-        <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full filter blur-3xl"></div>
-        <div className="absolute bottom-0 left-0 w-96 h-96 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
+  {/* طبقة داكنة متدرجة (تعمل في الوضعين) */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.88) 0%, rgba(88, 28, 135, 0.85) 50%, rgba(131, 24, 67, 0.88) 100%)'
+    }}
+  ></div>
 
-        <div className="relative h-full flex items-center justify-center px-6 py-12 md:py-16">
-          <div className="text-center text-white max-w-3xl mx-auto">
+  {/* زخارف خفيفة */}
+  <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full filter blur-3xl"></div>
+  <div className="absolute bottom-0 left-0 w-64 h-64 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
 
-            <h1 className="text-3xl md:text-5xl font-black mb-4 leading-tight drop-shadow-xl">
-              مدونة نبض التقنية
-            </h1>
+  {/* المحتوى */}
+  <div className="relative h-full flex items-center justify-center px-6 py-8 md:py-10">
+    <div className="text-center text-white max-w-3xl mx-auto">
 
-            <p className="text-base md:text-lg text-white/95 max-w-2xl mx-auto leading-relaxed mb-6 font-medium">
-              تابع آخر أخبار التكنولوجيا والذكاء الاصطناعي والهواتف الذكية
-            </p>
+      {/* شارة صغيرة */}
+      <span className="inline-block bg-white/20 backdrop-blur-md text-white text-xs font-bold px-3 py-1 rounded-full border border-white/30 mb-4">
+         آخر الأخبار التقنية
+      </span>
 
-            <div className="flex flex-wrap gap-3 justify-center mb-5">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base shadow-xl hover:scale-105 transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: '#ffffff',
-                }}
-              >
-               
-                <span>تصفح الأخبار</span>
-              </Link>
+      {/* العنوان */}
+      <h1 className="text-2xl md:text-4xl font-black mb-3 leading-tight drop-shadow-lg">
+        مدونة نبض التقنية
+      </h1>
 
-              <Link
-                href="/varied"
-                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full font-bold text-base shadow-xl hover:scale-105 transition-all"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: '#ffffff',
-                }}
-              >
-                
-                
-                <span>مواضيع متنوعة</span>
-              </Link>
-            </div>
+      {/* الوصف */}
+      <p className="text-sm md:text-base text-white/90 max-w-xl mx-auto leading-relaxed">
+        منصة عربية متخصصة في آخر أخبار التكنولوجيا والذكاء الاصطناعي والهواتف الذكية
+      </p>
 
-          
+      {/* خط فاصل أنيق */}
+      <div className="flex items-center justify-center gap-2 mt-5">
+        <div className="w-8 h-0.5 bg-white/40 rounded-full"></div>
+        <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+        <div className="w-8 h-0.5 bg-white/40 rounded-full"></div>
+      </div>
 
-          </div>
-        </div>
-      </section>
+    </div>
+  </div>
+</section>
 
       {/* ===== باقي المحتوى (محدود العرض) ===== */}
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -151,57 +153,86 @@ export default function Home() {
 
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-5">
 
-            {/* المقال الرئيسي */}
-            {sortedArticles[0] && (
-              <Link
-                href={`/blog/${sortedArticles[0].slug}`}
-                className="group relative rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-500 lg:col-span-3"
-              >
-                <div className="relative w-full aspect-[16/11] lg:h-full min-h-[400px] overflow-hidden bg-gray-900">
-                  <Image
-                    src={sortedArticles[0].image}
-                    alt={sortedArticles[0].title}
-                    fill
-                    priority
-                    sizes="(max-width: 1024px) 100vw, 60vw"
-                    className="object-cover group-hover:scale-110 transition-transform duration-700"
-                  />
+            {/* ===== المقال الرئيسي (سلايدر تلقائي) ===== */}
+<div className="lg:col-span-3 relative">
 
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
+  {featuredArticles.map((article, index) => (
+    <Link
+      key={article.slug}
+      href={`/blog/${article.slug}`}
+      className={`group absolute inset-0 transition-opacity duration-1000 ${
+        index === activeSlide ? 'opacity-100 z-10' : 'opacity-0 z-0 pointer-events-none'
+      }`}
+      style={{ position: index === activeSlide ? 'relative' : 'absolute' }}
+    >
+      <div className="relative w-full aspect-[16/11] lg:h-full min-h-[400px] overflow-hidden bg-gray-900 rounded-2xl">
+        <img
+          src={article.image}
+          alt={article.title}
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+          loading={index === 0 ? 'eager' : 'lazy'}
+        />
 
-                  <span className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                    <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
-                    <span>جديد</span>
-                  </span>
+        <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/50 to-transparent"></div>
 
-                  <span className="absolute top-4 left-4 bg-white/25 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/40">
-                    {sortedArticles[0].category}
-                  </span>
+        {/* شارة "جديد" */}
+        <span className="absolute top-4 right-4 bg-gradient-to-r from-red-500 to-orange-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
+          <span className="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+          <span>جديد</span>
+        </span>
 
-                  <div className="absolute bottom-0 right-0 left-0 p-6 md:p-8 text-white">
-                    <h3 className="text-2xl md:text-3xl font-black mb-3 leading-tight drop-shadow-lg">
-                      {sortedArticles[0].title}
-                    </h3>
-                    <p className="text-sm md:text-base text-white/90 line-clamp-2 mb-5 leading-relaxed max-w-2xl">
-                      {sortedArticles[0].excerpt}
-                    </p>
-                    <div className="flex items-center justify-between flex-wrap gap-3">
-                      <div className="flex items-center gap-4 text-xs">
-                        <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                          📅 {sortedArticles[0].date}
-                        </span>
-                        <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-full">
-                          ⏱️ {sortedArticles[0].readTime}
-                        </span>
-                      </div>
-                      <span className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-full font-bold text-xs shadow-lg group-hover:scale-105 transition-transform">
-                        اقرأ المقال كامل ←
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </Link>
-            )}
+        {/* شارة التصنيف */}
+        <span className="absolute top-4 left-4 bg-white/25 backdrop-blur-md text-white text-xs font-bold px-3 py-1.5 rounded-full border border-white/40">
+          {article.category}
+        </span>
+
+        {/* المحتوى */}
+        <div className="absolute bottom-0 right-0 left-0 p-6 md:p-8 text-white">
+          <h3 className="text-2xl md:text-3xl font-black mb-3 leading-tight drop-shadow-lg line-clamp-2">
+            {article.title}
+          </h3>
+          <p className="text-sm md:text-base text-white/90 line-clamp-2 mb-5 leading-relaxed max-w-2xl">
+            {article.excerpt}
+          </p>
+          <div className="flex items-center justify-between flex-wrap gap-3">
+            <div className="flex items-center gap-4 text-xs">
+              <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                📅 {article.date}
+              </span>
+              <span className="flex items-center gap-1.5 bg-white/15 backdrop-blur-sm px-3 py-1.5 rounded-full">
+                ⏱️ {article.readTime}
+              </span>
+            </div>
+            <span className="bg-gradient-to-r from-indigo-500 to-purple-600 px-4 py-2 rounded-full font-bold text-xs shadow-lg group-hover:scale-105 transition-transform">
+              اقرأ المقال كامل ←
+            </span>
+            
+          </div>
+        </div>
+      </div>
+    </Link>
+  ))}
+
+  {/* ===== مؤشرات السلايدر (Dots) ===== */}
+  <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex items-center gap-2 z-20">
+    {featuredArticles.map((_, index) => (
+      <button
+        key={index}
+        onClick={(e) => {
+          e.preventDefault();
+          setActiveSlide(index);
+        }}
+        aria-label={`الانتقال إلى المقال ${index + 1}`}
+        className={`transition-all duration-300 rounded-full ${
+          index === activeSlide
+            ? 'w-8 h-2 bg-white'
+            : 'w-2 h-2 bg-white/50 hover:bg-white/80'
+        }`}
+      ></button>
+    ))}
+  </div>
+
+</div>
 
             {/* المقالات الجانبية */}
             <div className="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
@@ -334,127 +365,66 @@ export default function Home() {
           </section>
         )}
 
-        {/* ===== لماذا نبض التقنية ===== */}
-        <section className="py-16 bg-gradient-to-br from-indigo-50 via-white to-purple-50 rounded-3xl mb-12">
-          <div className="max-w-7xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-                لماذا يختارنا القارئ العربي؟
-              </h2>
-              <p className="text-lg text-gray-600 max-w-2xl mx-auto leading-relaxed">
-                كل مقال هو جهد حقيقي يبدأ من سؤال يطرحه القارئ، وينتهي بحل عملي يطبقه في حياته.
-              </p>
-            </div>
+        
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:-translate-y-1">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition">
-                  ⚡
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">محتوى فوري</h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
-                  ننشر الأخبار في وقتها، ونحدّث المقالات عندما تتغير التقنيات.
-                </p>
-              </div>
+       {/* ===== CTA النهائي - مصغّر واحترافي ===== */}
+<section className="relative w-full overflow-hidden shadow-lg min-h-[180px] md:min-h-[220px]">
 
-              <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:-translate-y-1">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-pink-500 to-rose-600 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition">
-                  📚
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">عمق حقيقي</h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
-                  مقالاتنا ليست ملخصات سطحية. كل مقال يقدم تحليلاً، أمثلة، وجداول.
-                </p>
-              </div>
+  {/* الصورة الخلفية */}
+  <img
+    src="/images/blog-hero.jpg"
+    alt="ابدأ رحلتك التقنية مع نبض التقنية"
+    className="absolute inset-0 w-full h-full object-cover"
+    loading="lazy"
+    onError={(e) => {
+      e.target.style.display = 'none';
+      e.target.parentElement.style.background = 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #db2777 100%)';
+    }}
+  />
 
-              <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:-translate-y-1">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-amber-500 to-orange-600 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition">
-                  🎯
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">لغة بسيطة</h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
-                  نكتب بلغة يفهمها المبتدئ، دون المساس بدقة المعلومة.
-                </p>
-              </div>
+  {/* طبقة داكنة متدرجة */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background: 'linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(49, 46, 129, 0.88) 50%, rgba(88, 28, 135, 0.92) 100%)'
+    }}
+  ></div>
 
-              <div className="group bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-300 p-6 border border-gray-100 hover:-translate-y-1">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white text-2xl mb-4 group-hover:scale-110 transition">
-                  🆓
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2">مجاني بالكامل</h3>
-                <p className="text-gray-600 leading-relaxed text-sm">
-                  كل المحتوى والأدوات مجانية. لا تسجيل، لا اشتراكات.
-                </p>
-              </div>
-            </div>
+  {/* زخارف خفيفة */}
+  <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+  <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
 
-            {/* شريط الإحصائيات */}
-            <div className="mt-12 grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
-              <div className="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">32+</div>
-                <div className="text-xs text-gray-600 mt-1 font-medium">مقالة عميقة</div>
-              </div>
-              <div className="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-pink-600 to-rose-600 bg-clip-text text-transparent">100%</div>
-                <div className="text-xs text-gray-600 mt-1 font-medium">محتوى عربي</div>
-              </div>
-              <div className="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent">24/7</div>
-                <div className="text-xs text-gray-600 mt-1 font-medium">تحديث مستمر</div>
-              </div>
-              <div className="text-center p-4 bg-white/70 backdrop-blur-sm rounded-xl border border-gray-100">
-                <div className="text-3xl font-extrabold bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent">0 دج</div>
-                <div className="text-xs text-gray-600 mt-1 font-medium">مجاني للجميع</div>
-              </div>
-            </div>
-          </div>
-        </section>
+  {/* المحتوى */}
+  <div className="relative h-full flex items-center justify-center px-6 py-6 md:py-8">
+    <div className="text-center text-white max-w-2xl mx-auto">
 
-        {/* ===== CTA النهائي ===== */}
-        <section className="relative rounded-3xl overflow-hidden shadow-2xl mb-12 min-h-[350px]">
-          <Image
-            src="/images/cta.jpg"
-            alt="ابدأ رحلتك التقنية مع نبض التقنية"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
+      {/* أيقونة صغيرة */}
+      <div className="text-3xl md:text-4xl mb-2 drop-shadow-lg">🚀</div>
 
-          <div
-            className="absolute inset-0"
-            style={{
-              background: `
-                radial-gradient(circle at 30% 40%, rgba(99, 102, 241, 0.6) 0%, transparent 50%),
-                radial-gradient(circle at 70% 60%, rgba(236, 72, 153, 0.5) 0%, transparent 50%),
-                linear-gradient(135deg, rgba(15, 23, 42, 0.92) 0%, rgba(49, 46, 129, 0.88) 50%, rgba(88, 28, 135, 0.92) 100%)
-              `
-            }}
-          ></div>
+      {/* العنوان */}
+      <h3 className="text-xl md:text-3xl font-black mb-2 leading-tight drop-shadow-lg">
+        ابدأ رحلتك التقنية الآن
+      </h3>
 
-          <div className="relative px-8 py-16 text-center text-white">
-            <div className="text-6xl mb-4 drop-shadow-2xl">🚀</div>
-            <h3 className="text-3xl md:text-4xl font-black mb-4 drop-shadow-lg">
-              ابدأ رحلتك التقنية الآن
-            </h3>
-            <p className="text-white/95 text-lg mb-8 max-w-xl mx-auto drop-shadow-lg">
-              تصفح الأخبار، وطوّر مهاراتك ومعارفك التقنية مع نبض التقنية.
-            </p>
+      {/* الوصف */}
+      <p className="text-xs md:text-sm text-white/90 max-w-lg mx-auto leading-relaxed mb-4">
+        تصفح الأخبار، وطوّر مهاراتك ومعارفك التقنية مع نبض التقنية
+      </p>
 
-            <div className="flex flex-wrap gap-4 justify-center">
-              <Link
-                href="/blog"
-                className="inline-flex items-center gap-2 px-8 py-4 rounded-full font-extrabold text-lg shadow-2xl hover:scale-110 transition-all duration-300"
-                style={{
-                  background: 'linear-gradient(135deg, #10b981, #059669)',
-                  color: '#ffffff',
-                }}
-              >
-                <span>📰</span>
-                <span>تصفح الأخبار</span>
-              </Link>
-            </div>
-          </div>
-        </section>
+      {/* الزر */}
+      <div className="flex flex-wrap gap-3 justify-center">
+        <Link
+          href="/blog"
+          className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full font-bold text-sm bg-white text-indigo-700 hover:bg-indigo-50 hover:scale-105 transition-all shadow-lg"
+        >
+          <span>📰</span>
+          <span>تصفح الأخبار</span>
+        </Link>
+      </div>
+
+    </div>
+  </div>
+</section>
 
       </div>
     </Layout>

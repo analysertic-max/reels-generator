@@ -95,31 +95,55 @@ if (searchQuery.trim()) {
 
       <div className="max-w-7xl mx-auto px-4 py-8">
 
-        {/* ===== Hero Section ===== */}
-        <section className="relative mb-8 rounded-3xl overflow-hidden shadow-2xl min-h-[300px]">
-          <img
-            src="/images/blog-hero.jpg"
-            alt="مدونة نبض التقنية"
-            className="absolute inset-0 w-full h-full object-cover"
-            onError={(e) => {
-              e.target.style.display = 'none';
-              e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
-            }}
-          />
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-900/85 via-purple-900/80 to-pink-900/85"></div>
+     {/* ===== Hero Section - مصغّر Full Width ===== */}
+<section className="relative w-full overflow-hidden shadow-lg min-h-[140px] md:min-h-[170px]">
+  
+  {/* الصورة الخلفية */}
+  <img
+    src="/images/blog-hero.jpg"
+    alt="مدونة نبض التقنية - آخر الأخبار"
+    className="absolute inset-0 w-full h-full object-cover"
+    loading="eager"
+    onError={(e) => {
+      e.target.style.display = 'none';
+      e.target.parentElement.style.background = 'linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)';
+    }}
+  />
 
-          <div className="relative px-6 py-12 text-center text-white">
-            <div className="inline-block bg-white/20 backdrop-blur-md px-5 py-2.5 rounded-full text-sm font-bold mb-4 border border-white/40">
-              📰 {blogArticlesList.length} مقال منشور
-            </div>
-            <h1 className="text-4xl md:text-5xl font-black mb-3 drop-shadow-2xl">
-              آخر الأخبار
-            </h1>
-            <p className="text-lg text-white/90 max-w-2xl mx-auto">
-              تابع آخر أخبار التكنولوجيا، الذكاء الاصطناعي، والسوشيال ميديا
-            </p>
-          </div>
-        </section>
+  {/* طبقة داكنة متدرجة */}
+  <div
+    className="absolute inset-0"
+    style={{
+      background: 'linear-gradient(135deg, rgba(30, 27, 75, 0.88) 0%, rgba(88, 28, 135, 0.85) 50%, rgba(131, 24, 67, 0.88) 100%)'
+    }}
+  ></div>
+
+  {/* زخارف خفيفة */}
+  <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+  <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/10 rounded-full filter blur-3xl"></div>
+
+  {/* المحتوى */}
+  <div className="relative h-full flex items-center justify-center px-6 py-4 md:py-6">
+    <div className="text-center text-white max-w-2xl mx-auto">
+
+      {/* شارة صغيرة */}
+      <span className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] md:text-xs font-bold px-3 py-1 rounded-full border border-white/30 mb-2">
+        📰 {blogArticlesList.length} مقال منشور
+      </span>
+
+      {/* العنوان */}
+      <h1 className="text-xl md:text-3xl font-black mb-1.5 leading-tight drop-shadow-lg">
+        آخر الأخبار
+      </h1>
+
+      {/* الوصف */}
+      <p className="text-xs md:text-sm text-white/90 max-w-lg mx-auto leading-relaxed">
+        تابع آخر أخبار التكنولوجيا، الذكاء الاصطناعي، والسوشيال ميديا
+      </p>
+
+    </div>
+  </div>
+</section>
 
         {/* ===== نتائج البحث ===== */}
 {searchQuery && (
