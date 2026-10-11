@@ -126,19 +126,20 @@ if (searchQuery.trim()) {
   <div className="relative h-full flex items-center justify-center px-6 py-4 md:py-6">
     <div className="text-center text-white max-w-2xl mx-auto">
 
-      {/* شارة صغيرة */}
-      <span className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] md:text-xs font-bold px-3 py-1 rounded-full border border-white/30 mb-2">
-        📰 {blogArticlesList.length} مقال منشور
-      </span>
+    
 
       {/* العنوان */}
       <h1 className="text-xl md:text-3xl font-black mb-1.5 leading-tight drop-shadow-lg">
         آخر الأخبار
       </h1>
 
-      {/* الوصف */}
+      
       <p className="text-xs md:text-sm text-white/90 max-w-lg mx-auto leading-relaxed">
         تابع آخر أخبار التكنولوجيا، الذكاء الاصطناعي، والسوشيال ميديا
+      </p>
+      
+      <p className="text-xs md:text-sm text-white/90 max-w-lg mx-auto leading-relaxed">
+       العلم نور ، إقرأ وتشبع بالمعرفة
       </p>
 
     </div>

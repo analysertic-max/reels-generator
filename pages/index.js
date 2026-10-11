@@ -365,7 +365,124 @@ export default function Home() {
           </section>
         )}
 
-        
+      {/* ===== قسم اقرأ أيضاً (سلايدر تلقائي) ===== */}
+<section className="mb-16">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-rose-600 rounded-full"></span>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-black text-gray-800 flex items-center gap-2">
+                    اقرأ أيضاً
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    تصفح وتشبع بالمعرفة                  </p>
+                </div>
+              </div>
+    <Link
+      href="/blog"
+      className="text-cyan-600 dark:text-cyan-400 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all text-sm"
+    >
+      <span>عرض الكل</span>
+      <span>←</span>
+    </Link>
+  </div>
+
+  <div className="relative overflow-hidden py-4 marquee-container">
+    
+    {/* تدرجات على الحواف */}
+    <div 
+      className="absolute top-0 right-0 bottom-0 w-20 z-10 pointer-events-none fade-right"
+    ></div>
+    <div 
+      className="absolute top-0 left-0 bottom-0 w-20 z-10 pointer-events-none fade-left"
+    ></div>
+
+    {/* الشريط المتحرك */}
+    <div className="flex gap-5 animate-marquee-horizontal">
+      {[...sortedArticles.slice(10, 25), ...sortedArticles.slice(10, 25)].map((article, index) => (
+        <Link
+  key={`${article.slug}-${index}`}
+  href={`/blog/${article.slug}`}
+  className="group flex-shrink-0 w-72 rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden bg-white dark:bg-gray-800"
+
+          style={{ backgroundColor: 'var(--card-bg)' }}
+        >
+          <div className="relative w-full h-40 overflow-hidden bg-gray-100 dark:bg-gray-700">
+            <img
+              src={article.image}
+              alt={`${article.title} - ${article.category} - نبض التقنية`}
+              title={article.title}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+            <span className="absolute top-3 right-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
+              {article.category}
+            </span>
+          </div>
+
+          <div className="p-4" style={{ backgroundColor: 'var(--card-bg)' }}>
+            <h3 
+              className="text-sm font-bold group-hover:text-cyan-600 transition line-clamp-2 leading-snug mb-2 min-h-[40px]"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              {article.title}
+            </h3>
+            <div className="flex items-center justify-between text-xs">
+              <span style={{ color: 'var(--text-secondary)' }}>📅 {article.date}</span>
+              <span className="text-cyan-600 font-bold">اقرأ ←</span>
+            </div>
+          </div>
+        </Link>
+      ))}
+    </div>
+  </div>
+</section>
+
+{/* ===== قسم مبادئ الإعلام الآلي ===== */}
+<section className="mb-16">
+            <div className="flex items-center justify-between mb-8">
+              <div className="flex items-center gap-3">
+                <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-rose-600 rounded-full"></span>
+                <div>
+                  <h2 className="text-2xl md:text-3xl font-black text-gray-800 flex items-center gap-2">
+                    مبادئ أولية في الإعلام الآلي
+                  </h2>
+                  <p className="text-sm text-gray-500 mt-1">
+                    صفحة تعليمية متخصصة في الإعلام الآلي                    </p>
+                </div>
+              </div>
+    <Link
+      href="/lessons"
+      className="text-blue-600 dark:text-blue-400 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all text-sm"
+    >
+      <span>كل الدروس</span>
+      <span>←</span>
+    </Link>
+  </div>
+
+  {/* شبكة السنوات */}
+  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+    {[
+      { key: '1am', title: 'الأولى متوسط', icon: '📘', color: 'from-blue-500 to-indigo-600' },
+      { key: '2am', title: 'الثانية متوسط', icon: '📗', color: 'from-emerald-500 to-teal-600' },
+      { key: '3am', title: 'الثالثة متوسط', icon: '📙', color: 'from-amber-500 to-orange-600' },
+      { key: '4am', title: 'الرابعة متوسط', icon: '📕', color: 'from-pink-500 to-rose-600' },
+    ].map((year) => (
+      <Link
+        key={year.key}
+        href={`/lessons#${year.key}`}
+        className={`group bg-gradient-to-br ${year.color} rounded-2xl p-6 text-white text-center transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl`}
+      >
+        <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">
+          {year.icon}
+        </div>
+        <div className="font-bold text-sm md:text-base mb-1">{year.title}</div>
+        <div className="text-xs opacity-80">دروس مصورة</div>
+      </Link>
+    ))}
+  </div>
+</section>
 
        {/* ===== CTA النهائي - مصغّر واحترافي ===== */}
 <section className="relative w-full overflow-hidden shadow-lg min-h-[180px] md:min-h-[220px]">

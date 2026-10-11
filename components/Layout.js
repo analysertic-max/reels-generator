@@ -51,7 +51,19 @@ export default function Layout({
       { href: '/blog?category=تصميم', label: 'تصميم', icon: '' },
     ]
   },
-  { href: '/varied', label: 'مواضيع متنوعة', icon: '' },  // ← ✅ جديد
+
+
+  {
+  href: '/varied',
+  label: 'مواضيع متنوعة',
+  
+  dropdown: [
+    { href: '/varied', label: 'كل المواضيع',  },
+    { href: '/lessons', label: 'مبادئ أولية في الإعلام الآلي', },
+  ]
+},
+
+
   { href: '/about', label: 'من نحن', icon: '' },
   { href: '/contact', label: 'تواصل معنا', icon: '' },
 ];

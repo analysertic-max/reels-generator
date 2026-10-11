@@ -150,9 +150,7 @@ export default function Varied() {
               </div>
             )}
 
-            <div className="mt-10 text-center bg-white/60 border border-dashed border-gray-300 rounded-2xl p-6">
-              <p className="text-xs text-gray-400">مساحة إعلانية - Google AdSense</p>
-            </div>
+            
           </div>
 
           <div className="lg:col-span-1">

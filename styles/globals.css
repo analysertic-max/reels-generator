@@ -191,3 +191,33 @@ header + .h-20 {
   height: 80px;
 }
 
+/* ===== Marquee Animation للسلايدر الأفقي ===== */
+
+.marquee-container {
+  /* إخفاء شريط التمرير */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.marquee-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* حركة السلايدر من اليمين إلى اليسار */
+@keyframes marquee-horizontal {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee-horizontal {
+  /* 60 ثانية للدورة الكاملة - يمكن تعديلها */
+  animation: marquee-horizontal 60s linear infinite;
+  width: max-content;
+}
+
+
+
