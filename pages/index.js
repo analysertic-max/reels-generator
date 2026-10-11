@@ -446,10 +446,10 @@ export default function Home() {
                 <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-rose-600 rounded-full"></span>
                 <div>
                   <h2 className="text-2xl md:text-3xl font-black text-gray-800 flex items-center gap-2">
-                    مبادئ أولية في الإعلام الآلي
+                    مبادئ أولية في الإعلام الآلي 
                   </h2>
                   <p className="text-sm text-gray-500 mt-1">
-                    صفحة تعليمية متخصصة في الإعلام الآلي                    </p>
+                    دروس تعليمية وتمارين تطبيقية                    </p>
                 </div>
               </div>
     <Link
@@ -461,24 +461,69 @@ export default function Home() {
     </Link>
   </div>
 
-  {/* شبكة السنوات */}
+  {/* شبكة السنوات - بصور خلفية */}
   <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
     {[
-      { key: '1am', title: 'الأولى متوسط', icon: '📘', color: 'from-blue-500 to-indigo-600' },
-      { key: '2am', title: 'الثانية متوسط', icon: '📗', color: 'from-emerald-500 to-teal-600' },
-      { key: '3am', title: 'الثالثة متوسط', icon: '📙', color: 'from-amber-500 to-orange-600' },
-      { key: '4am', title: 'الرابعة متوسط', icon: '📕', color: 'from-pink-500 to-rose-600' },
+      { 
+        key: '1am', 
+        title: 'الأولى متوسط', 
+        
+        color: 'from-blue-500 to-indigo-600',
+        image: '/images/lessons/years/1am.jpg',
+      },
+      { 
+        key: '2am', 
+        title: 'الثانية متوسط', 
+       
+        color: 'from-emerald-500 to-teal-600',
+        image: '/images/lessons/years/2am.jpg',
+      },
+      { 
+        key: '3am', 
+        title: 'الثالثة متوسط', 
+       
+        color: 'from-amber-500 to-orange-600',
+        image: '/images/lessons/years/3am.jpg',
+      },
+      { 
+        key: '4am', 
+        title: 'الرابعة متوسط', 
+         
+        color: 'from-pink-500 to-rose-600',
+        image: '/images/lessons/years/4am.jpg',
+      },
     ].map((year) => (
       <Link
         key={year.key}
         href={`/lessons#${year.key}`}
-        className={`group bg-gradient-to-br ${year.color} rounded-2xl p-6 text-white text-center transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl`}
+        className={`group relative overflow-hidden rounded-2xl text-white text-center transition-all duration-300 hover:scale-105 shadow-md hover:shadow-xl aspect-[4/3] bg-gradient-to-br ${year.color}`}
       >
-        <div className="text-5xl mb-3 group-hover:scale-110 transition-transform">
-          {year.icon}
+        {/* الصورة الخلفية */}
+        <img
+          src={year.image}
+          alt={year.title}
+          loading="lazy"
+          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          onError={(e) => {
+            e.target.style.display = 'none';
+          }}
+        />
+
+        {/* طبقة داكنة */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20 group-hover:from-black/70 transition-all"></div>
+
+        {/* المحتوى */}
+        <div className="relative h-full flex flex-col items-center justify-center p-4">
+          <div className="text-4xl md:text-5xl mb-2 drop-shadow-2xl group-hover:scale-110 transition-transform">
+            {year.icon}
+          </div>
+          <div className="font-bold text-sm md:text-base drop-shadow-lg">
+            {year.title}
+          </div>
+          <div className="text-[10px] md:text-xs opacity-90 mt-1">
+            دروس مصورة
+          </div>
         </div>
-        <div className="font-bold text-sm md:text-base mb-1">{year.title}</div>
-        <div className="text-xs opacity-80">دروس مصورة</div>
       </Link>
     ))}
   </div>
