@@ -12,6 +12,7 @@ function generateSiteMap() {
     { path: '/privacy', priority: '0.5', changefreq: 'monthly' },
     { path: '/terms', priority: '0.5', changefreq: 'monthly' },
     { path: '/disclaimer', priority: '0.5', changefreq: 'monthly' },
+    { path: '/powerpoint-shortcuts', priority: '0.8', changefreq: 'weekly' },
   ];
 
   // ===== المقالات (مطابقة تماماً للملفات الموجودة) =====

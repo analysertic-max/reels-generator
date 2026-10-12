@@ -27,45 +27,40 @@ export default function Layout({
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  const navLinks = [
-  { href: '/', label: 'الرئيسية', icon: '' },
+const navLinks = [
+  { href: '/', label: 'الرئيسية', },
   {
     href: '/blog',
     label: 'أخبار تقنية',
-    icon: '',
+   
     dropdown: [
-      { href: '/blog?category=تكنولوجيا', label: 'تكنولوجيا', icon: '' },
-      { href: '/blog?category=ذكاء اصطناعي', label: 'ذكاء اصطناعي', icon: '' },
-      { href: '/blog?category=سوشيال ميديا', label: 'سوشيال ميديا', icon: '' },
+      { href: '/blog?category=تكنولوجيا', label: 'تكنولوجيا', },
+      { href: '/blog?category=ذكاء اصطناعي', label: 'ذكاء اصطناعي',  },
+      { href: '/blog?category=سوشيال ميديا', label: 'سوشيال ميديا',  },
     ]
   },
   {
     href: '/blog?section=apps',
     label: 'التصنيفات',
-    icon: '',
     dropdown: [
-      { href: '/blog?category=هواتف ذكية', label: 'الهواتف الذكية', icon: '' },
-      { href: '/blog?category=تطبيقات وبرامج', label: 'التطبيقات والبرامج', icon: '' },
-      { href: '/blog?category=كيف', label: 'كيف', icon: '' },
-      { href: '/blog?category=تسويق', label: 'تسويق', icon: '' },
-      { href: '/blog?category=تصميم', label: 'تصميم', icon: '' },
+      { href: '/varied', label: 'مواضيع متنوعة ',  },
+      { href: '/blog?category=هواتف ذكية', label: 'الهواتف الذكية',  },
+      { href: '/blog?category=تطبيقات وبرامج', label: 'التطبيقات والبرامج',  },
+      { href: '/blog?category=كيف', label: 'كيف', },
+      { href: '/blog?category=تسويق', label: 'تسويق',  },
+      { href: '/blog?category=تصميم', label: 'تصميم',  },
     ]
   },
-
-
-  {
-  href: '/varied',
-  label: 'مواضيع متنوعة',
-  
+{
+  href: '/lessons',
+  label: 'المنصة التعليمية',
   dropdown: [
-    { href: '/varied', label: 'كل المواضيع',  },
-    { href: '/lessons', label: 'مبادئ أولية في الإعلام الآلي', },
+    { href: '/lessons?section=lessons', label: 'مبادئ أولية في الإعلام الآلي',  },
+    { href: '/lessons?section=powerpoint', label: 'إختصارات برنامج PowerPoint',  },
   ]
 },
-
-
-  { href: '/about', label: 'من نحن', icon: '' },
-  { href: '/contact', label: 'تواصل معنا', icon: '' },
+  { href: '/about', label: 'من نحن',  },
+  { href: '/contact', label: 'تواصل معنا',  },
 ];
 
   const isActive = (href) => {

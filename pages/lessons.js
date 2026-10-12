@@ -1,21 +1,46 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import Layout from '../components/Layout';
 import NewsTicker from '../components/NewsTicker';
+import LessonsSidebar from '../components/LessonsSidebar';
 import { LESSONS_DATA } from '../lib/lessons';
+import { POWERPOINT_SHORTCUTS, POWERPOINT_CATEGORIES } from '../lib/powerpoint/shortcuts';
 
 export default function Lessons() {
+  const router = useRouter();
+  const [activeSection, setActiveSection] = useState('lessons');
+  
+  // حالة قسم الإعلام الآلي
   const [selectedYear, setSelectedYear] = useState('1am');
   const [selectedLesson, setSelectedLesson] = useState(null);
+  
+  // حالة قسم PowerPoint
+  const [selectedCategory, setSelectedCategory] = useState('الكل');
+  
+  // حالة Lightbox المشتركة
   const [lightboxImage, setLightboxImage] = useState(null);
 
+  // قراءة section من URL
+useEffect(() => {
+  if (router.isReady && router.query.section) {
+    const section = router.query.section;
+    if (['lessons', 'powerpoint'].includes(section)) {
+      setActiveSection(section);
+    }
+  }
+}, [router.isReady, router.query.section]);
+
   const currentYear = LESSONS_DATA[selectedYear];
-
-
+  
+  // فلترة اختصارات PowerPoint
+  const filteredShortcuts = selectedCategory === 'الكل'
+    ? POWERPOINT_SHORTCUTS
+    : POWERPOINT_SHORTCUTS.filter((s) => s.category === selectedCategory);
 
   return (
     <Layout
-      title="مبادئ أولية في الإعلام الآلي"
-      description="دروس مبادئ أولية في الإعلام الآلي لجميع سنوات المتوسط - صور تعليمية"
+      title="المنصة التعليمية - نبض التقنية"
+      description="دروس مبادئ الإعلام الآلي واختصارات PowerPoint - منصة تعليمية عربية"
     >
       <NewsTicker />
 
@@ -25,7 +50,7 @@ export default function Lessons() {
         <section className="relative w-full overflow-hidden shadow-lg rounded-2xl mb-8 min-h-[160px] md:min-h-[200px]">
           <img
             src="/images/lessons/hero.jpg"
-            alt="مبادئ أولية في الإعلام الآلي"
+            alt="المنصة التعليمية"
             className="absolute inset-0 w-full h-full object-cover"
             onError={(e) => {
               e.target.style.display = 'none';
@@ -41,90 +66,236 @@ export default function Lessons() {
 
           <div className="relative h-full flex items-center justify-center px-6 py-8">
             <div className="text-center text-white max-w-2xl mx-auto">
+              <div className="text-4xl mb-2">🎓</div>
               <h1 className="text-2xl md:text-4xl font-black mb-2 leading-tight">
-                دروس مبادئ الإعلام الآلي للمتوسط
+                المنصة التعليمية
               </h1>
               <p className="text-sm md:text-base text-white/90">
-                دروس تعليمية مصورة في مبادئ الإعلام الآلي لجميع سنوات المتوسط
+                دروس مبادئ الإعلام الآلي واختصارات PowerPoint
               </p>
             </div>
           </div>
         </section>
 
-        {/* اختيار السنة */}
-        <div className="mb-8 grid grid-cols-2 md:grid-cols-4 gap-4">
-          {Object.entries(LESSONS_DATA).map(([key, year]) => (
-            <button
-              key={key}
-              onClick={() => setSelectedYear(key)}
-              className={`relative overflow-hidden rounded-2xl p-5 text-white text-center transition-all duration-300 hover:scale-105 ${
-                selectedYear === key
-                  ? 'ring-4 ring-white ring-offset-2 ring-offset-gray-100 shadow-2xl scale-105'
-                  : 'shadow-md hover:shadow-xl opacity-90'
-              } bg-gradient-to-br ${year.color}`}
-            >
-              <div className="text-4xl mb-2">{year.icon}</div>
-              <div className="font-bold text-sm md:text-base">{year.title}</div>
-            </button>
-          ))}
-        </div>
+        {/* ===== Grid: Sidebar + Content ===== */}
+        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
-        {/* وصف السنة المختارة */}
-        <div className="mb-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md p-5 border-r-4 border-indigo-500">
-          <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
-            {currentYear.icon} {currentYear.title}
-          </h2>
-          <p className="text-sm text-gray-600 dark:text-gray-400">
-            {currentYear.description}
-          </p>
-        </div>
+          {/* القائمة الجانبية */}
+          <LessonsSidebar 
+            activeSection={activeSection} 
+            setActiveSection={setActiveSection} 
+          />
 
-        {/* قائمة الدروس */}
-        <div className="space-y-3">
-          {currentYear.lessons.map((lesson, index) => (
-            <div
-              key={lesson.id}
-              onClick={() => setSelectedLesson(lesson)}
-              className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer hover:-translate-x-1"
-            >
-              <div className="flex items-center gap-4 p-3">
-                {/* الصورة المصغرة */}
-                <div className="relative flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
-                  <img
-                    src={lesson.image}
-                    alt={lesson.title}
-                    loading="lazy"
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-                    onError={(e) => {
-                      e.target.src = 'https://via.placeholder.com/200x200/6366f1/ffffff?text=' + (index + 1);
-                    }}
-                  />
-                  <span className="absolute top-1 right-1 w-6 h-6 bg-gradient-to-br from-indigo-600 to-purple-600 text-white text-xs font-black flex items-center justify-center rounded-full shadow-lg">
-                    {index + 1}
-                  </span>
+          {/* المحتوى الرئيسي */}
+          <main className="lg:col-span-3">
+
+            {/* ===== قسم الإعلام الآلي ===== */}
+            {activeSection === 'lessons' && (
+              <div>
+                {/* اختيار السنة */}
+                <div className="mb-6 grid grid-cols-2 md:grid-cols-4 gap-4">
+                {Object.entries(LESSONS_DATA).map(([key, year]) => (
+  <button
+    key={key}
+    onClick={() => setSelectedYear(key)}
+    className={`group relative overflow-hidden rounded-2xl text-white text-center transition-all duration-300 hover:scale-105 aspect-[4/3] ${
+      selectedYear === key
+        ? 'ring-4 ring-white ring-offset-2 ring-offset-gray-100 shadow-2xl scale-105'
+        : 'shadow-md hover:shadow-xl'
+    }`}
+  >
+    {/* الصورة الخلفية - واضحة */}
+    <img
+      src={year.image}
+      alt={year.title}
+      loading="lazy"
+      className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+      onError={(e) => {
+        e.target.style.display = 'none';
+      }}
+    />
+
+    {/* تدرج لوني - شفاف جداً فقط لضمان قراءة النص */}
+    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+    {/* المحتوى */}
+    <div className="relative h-full flex flex-col items-center justify-center p-3">
+      <div className="text-3xl md:text-4xl mb-1 drop-shadow-2xl group-hover:scale-110 transition-transform">
+        {year.icon}
+      </div>
+      <div className="font-bold text-xs md:text-sm drop-shadow-lg">
+        {year.title}
+      </div>
+    </div>
+
+    {/* شارة مختار */}
+    {selectedYear === key && (
+      <div className="absolute top-2 right-2 bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded-full shadow-lg">
+        ✓
+      </div>
+    )}
+  </button>
+))}
                 </div>
 
-                {/* النص */}
-                <div className="flex-1 min-w-0 py-1">
-                  <h3 className="font-bold text-gray-900 dark:text-white text-base group-hover:text-indigo-600 transition line-clamp-2 leading-snug">
-                    {lesson.title}
-                  </h3>
-                  {lesson.duration && (
-                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                      <span>⏱️ {lesson.duration}</span>
-                    </p>
-                  )}
+                {/* وصف السنة */}
+                <div className="mb-6 bg-white dark:bg-gray-800 rounded-2xl shadow-md p-5 border-r-4 border-indigo-500">
+                  <h2 className="text-xl md:text-2xl font-bold text-gray-900 dark:text-white mb-1">
+                    {currentYear.icon} {currentYear.title}
+                  </h2>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    {currentYear.description}
+                  </p>
                 </div>
 
-                {/* سهم */}
-                <div className="flex-shrink-0 text-gray-400 group-hover:text-indigo-600 group-hover:-translate-x-1 transition">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                    <polyline points="15 18 9 12 15 6" />
-                  </svg>
+                {/* قائمة الدروس */}
+                <div className="space-y-3">
+                  {currentYear.lessons.map((lesson, index) => (
+                    <div
+                      key={lesson.id}
+                      onClick={() => setSelectedLesson(lesson)}
+                      className="group bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 cursor-pointer hover:-translate-x-1"
+                    >
+                      <div className="flex items-center gap-4 p-3">
+                        <div className="relative flex-shrink-0 w-20 h-20 md:w-24 md:h-24 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700">
+                          <img
+                            src={lesson.image}
+                            alt={lesson.title}
+                            loading="lazy"
+                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                            onError={(e) => {
+                              e.target.src = 'https://via.placeholder.com/200x200/6366f1/ffffff?text=' + (index + 1);
+                            }}
+                          />
+                          <span className="absolute top-1 right-1 w-6 h-6 bg-gradient-to-br from-indigo-600 to-purple-600 text-white text-xs font-black flex items-center justify-center rounded-full shadow-lg">
+                            {index + 1}
+                          </span>
+                        </div>
+
+                        <div className="flex-1 min-w-0 py-1">
+                          <h3 className="font-bold text-gray-900 dark:text-white text-base group-hover:text-indigo-600 transition line-clamp-2 leading-snug">
+                            {lesson.title}
+                          </h3>
+                          {lesson.duration && (
+                            <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
+                              ⏱️ {lesson.duration}
+                            </p>
+                          )}
+                        </div>
+
+                        <div className="flex-shrink-0 text-gray-400 group-hover:text-indigo-600 group-hover:-translate-x-1 transition">
+                          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                            <polyline points="15 18 9 12 15 6" />
+                          </svg>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
+            )}
+
+         {/* ===== قسم PowerPoint ===== */}
+{activeSection === 'powerpoint' && (
+  <div>
+    {/* Hero PowerPoint - بصورة خلفية */}
+    <div className="relative mb-6 rounded-2xl overflow-hidden shadow-lg min-h-[140px] md:min-h-[180px]">
+      
+      {/* الصورة الخلفية */}
+      <img
+        src="/images/shortcuts/hero.jpg"
+        alt="اختصارات PowerPoint"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover"
+        onError={(e) => {
+          e.target.style.display = 'none';
+        }}
+      />
+
+      {/* تدرج لوني - خفيف ليسمح برؤية الصورة */}
+      <div className="absolute inset-0 bg-gradient-to-r from-orange-600/85 via-red-600/75 to-pink-600/85"></div>
+
+      {/* زخارف */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+
+      {/* المحتوى */}
+      <div className="relative h-full flex items-center justify-center px-6 py-8">
+        <div className="text-center text-white max-w-2xl mx-auto">
+
+         
+          {/* العنوان */}
+          <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight drop-shadow-lg">
+            إختصارات برنامج PowerPoint
+          </h2>
+
+          {/* الوصف */}
+          <p className="text-sm md:text-base text-white/95 max-w-xl mx-auto leading-relaxed drop-shadow-lg">
+            جميع اختصارات لوحة المفاتيح لبرنامج PowerPoint بالصور
+          </p>
+
+          {/* خط فاصل */}
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="w-8 h-0.5 bg-white/50 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <div className="w-8 h-0.5 bg-white/50 rounded-full"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    {/* شبكة الإختصارات */}
+    {filteredShortcuts.length === 0 ? (
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center">
+        <div className="text-6xl mb-4">📭</div>
+        <p className="text-gray-600 dark:text-gray-400">
+          لا توجد اختصارات في هذا التصنيف
+        </p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {filteredShortcuts.map((shortcut) => (
+          <div
+            key={shortcut.id}
+            onClick={() => setLightboxImage(shortcut.image)}
+            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-zoom-in hover:-translate-y-1 border border-gray-100 dark:border-gray-700"
+          >
+            <div className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-700">
+              <img
+                src={shortcut.image}
+                alt={shortcut.title}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/600x450/d24726/ffffff?text=' + encodeURIComponent(shortcut.title);
+                }}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <span className="text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">🔍</span>
+              </div>
+              <span className="absolute top-3 right-3 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                {shortcut.category}
+              </span>
             </div>
-          ))}
+            <div className="p-4">
+              <h3 className="font-bold text-gray-900 dark:text-white text-base group-hover:text-orange-600 transition">
+                {shortcut.title}
+              </h3>
+              {shortcut.keys && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-mono" dir="ltr">
+                  {shortcut.keys}
+                </p>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
+
+          </main>
         </div>
 
         {/* ===== Modal عرض الدرس ===== */}
@@ -138,17 +309,14 @@ export default function Lessons() {
               className="bg-white dark:bg-gray-800 rounded-2xl max-w-4xl w-full mx-auto my-6 overflow-hidden shadow-2xl relative"
               onClick={(e) => e.stopPropagation()}
             >
-              {/* زر الإغلاق الوحيد */}
               <button
                 className="absolute top-4 left-4 z-20 w-11 h-11 rounded-full bg-red-500 hover:bg-red-600 text-white text-xl flex items-center justify-center transition shadow-lg"
                 onClick={() => setSelectedLesson(null)}
                 aria-label="إغلاق"
-                title="إغلاق"
               >
                 ✕
               </button>
 
-              {/* رأس Modal */}
               <div className="relative bg-gradient-to-r from-indigo-600 to-purple-600 p-6 text-white pr-20">
                 <span className="inline-block bg-white/20 backdrop-blur-sm text-xs font-bold px-3 py-1 rounded-full mb-2">
                   الدرس {selectedLesson.id}
@@ -161,7 +329,6 @@ export default function Lessons() {
                 )}
               </div>
 
-              {/* ===== الصورة - قابلة للنقر للتكبير ===== */}
               <div
                 className="relative w-full bg-gray-100 dark:bg-gray-900 flex items-center justify-center p-4 md:p-6 cursor-zoom-in group"
                 onClick={() => setLightboxImage(selectedLesson.image)}
@@ -174,34 +341,24 @@ export default function Lessons() {
                     e.target.src = 'https://via.placeholder.com/800x600/6366f1/ffffff?text=' + encodeURIComponent(selectedLesson.title);
                   }}
                 />
-
-                {/* تلميح "انقر للتكبير" */}
                 <div className="absolute top-8 right-8 bg-black/70 backdrop-blur-sm text-white text-xs font-bold px-3 py-2 rounded-full flex items-center gap-1.5 opacity-0 group-hover:opacity-100 transition-opacity">
                   🔍 انقر للتكبير
                 </div>
               </div>
 
-              {/* المحتوى */}
               <div className="p-6 space-y-6">
-
-                {/* الوصف */}
                 {selectedLesson.description && (
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                      📖 وصف الدرس
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">📖 وصف الدرس</h3>
                     <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                       {selectedLesson.description}
                     </p>
                   </div>
                 )}
 
-                {/* الأهداف */}
                 {selectedLesson.objectives && selectedLesson.objectives.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                      🎯 أهداف الدرس
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">🎯 أهداف الدرس</h3>
                     <ul className="list-disc mr-6 space-y-1 text-gray-700 dark:text-gray-300">
                       {selectedLesson.objectives.map((obj, i) => (
                         <li key={i}>{obj}</li>
@@ -210,12 +367,9 @@ export default function Lessons() {
                   </div>
                 )}
 
-                {/* النقاط الرئيسية */}
                 {selectedLesson.keyPoints && selectedLesson.keyPoints.length > 0 && (
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                      💡 النقاط الرئيسية
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">💡 النقاط الرئيسية</h3>
                     <ul className="space-y-2">
                       {selectedLesson.keyPoints.map((point, i) => (
                         <li key={i} className="flex items-start gap-2 text-gray-700 dark:text-gray-300">
@@ -227,12 +381,9 @@ export default function Lessons() {
                   </div>
                 )}
 
-                {/* الأسئلة */}
                 {selectedLesson.exercises && selectedLesson.exercises.length > 0 && (
                   <div className="bg-indigo-50 dark:bg-indigo-900/20 rounded-xl p-4">
-                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2 flex items-center gap-2">
-                      📝 أسئلة للمراجعة
-                    </h3>
+                    <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">📝 أسئلة للمراجعة</h3>
                     <ol className="list-decimal mr-6 space-y-1 text-gray-700 dark:text-gray-300">
                       {selectedLesson.exercises.map((ex, i) => (
                         <li key={i}>{ex}</li>
@@ -241,7 +392,6 @@ export default function Lessons() {
                   </div>
                 )}
 
-                {/* زر إغلاق في النهاية */}
                 <div className="text-center pt-4">
                   <button
                     onClick={() => setSelectedLesson(null)}
@@ -250,7 +400,6 @@ export default function Lessons() {
                     ✕ إغلاق
                   </button>
                 </div>
-
               </div>
             </div>
           </div>
@@ -262,7 +411,6 @@ export default function Lessons() {
             className="fixed inset-0 z-[200] bg-black/98 flex items-center justify-center p-4"
             onClick={() => setLightboxImage(null)}
           >
-            {/* زر الإغلاق */}
             <button
               className="absolute top-4 right-4 z-10 w-12 h-12 rounded-full bg-red-500 hover:bg-red-600 text-white text-2xl flex items-center justify-center transition shadow-2xl"
               onClick={() => setLightboxImage(null)}
@@ -271,12 +419,10 @@ export default function Lessons() {
               ✕
             </button>
 
-            {/* تعليمات */}
             <div className="absolute top-4 left-4 bg-white/10 backdrop-blur-md text-white text-xs font-bold px-3 py-2 rounded-full">
               💡 انقر خارج الصورة للإغلاق
             </div>
 
-            {/* الصورة */}
             <img
               src={lightboxImage}
               alt="عرض كامل"
