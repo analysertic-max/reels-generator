@@ -3,24 +3,32 @@ import { useRouter } from 'next/router';
 
 export default function LessonsSidebar({ activeSection, setActiveSection }) {
   const router = useRouter();
-  const menuItems = [
-    {
-      key: 'lessons',
-      title: 'مبادئ الإعلام الآلي',
-      description: 'دروس لجميع سنوات المتوسط',
-      icon: '📚',
-      color: 'from-indigo-600 to-purple-600',
-      activeColor: 'from-indigo-600 to-purple-600',
-    },
-    {
-      key: 'powerpoint',
-      title: 'إختصارات PowerPoint',
-      description: 'اختصارات لوحة المفاتيح بالصور',
-      icon: '⌨️',
-      color: 'from-orange-500 to-red-500',
-      activeColor: 'from-orange-500 to-red-500',
-    },
-  ];
+const menuItems = [
+  {
+    key: 'lessons',
+    title: 'مبادئ الإعلام الآلي',
+    description: 'دروس لجميع سنوات المتوسط',
+    icon: '📚',
+    color: 'from-indigo-600 to-purple-600',
+    activeColor: 'from-indigo-600 to-purple-600',
+  },
+  {
+    key: 'powerpoint',
+    title: 'إختصارات PowerPoint',
+    description: 'اختصارات لوحة المفاتيح بالصور',
+    icon: '⌨️',
+    color: 'from-orange-500 to-red-500',
+    activeColor: 'from-orange-500 to-red-500',
+  },
+  {
+    key: 'templates',
+    title: 'نماذج مفيدة',
+    description: 'قوالب جاهزة للتعديل والاستخدام',
+    icon: '📄',
+    color: 'from-emerald-500 to-teal-600',
+    activeColor: 'from-emerald-500 to-teal-600',
+  },
+];
 
   return (
     <aside className="lg:col-span-1">

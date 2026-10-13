@@ -365,79 +365,7 @@ export default function Home() {
           </section>
         )}
 
-      {/* ===== قسم اقرأ أيضاً (سلايدر تلقائي) ===== */}
-<section className="mb-16">
-            <div className="flex items-center justify-between mb-8">
-              <div className="flex items-center gap-3">
-                <span className="w-1.5 h-8 bg-gradient-to-b from-pink-500 to-rose-600 rounded-full"></span>
-                <div>
-                  <h2 className="text-2xl md:text-3xl font-black text-gray-800 flex items-center gap-2">
-                    اقرأ أيضاً
-                  </h2>
-                  <p className="text-sm text-gray-500 mt-1">
-                    تصفح وتشبع بالمعرفة                  </p>
-                </div>
-              </div>
-    <Link
-      href="/blog"
-      className="text-cyan-600 dark:text-cyan-400 font-bold hover:gap-3 gap-2 inline-flex items-center transition-all text-sm"
-    >
-      <span>عرض الكل</span>
-      <span>←</span>
-    </Link>
-  </div>
 
-  <div className="relative overflow-hidden py-4 marquee-container">
-    
-    {/* تدرجات على الحواف */}
-    <div 
-      className="absolute top-0 right-0 bottom-0 w-20 z-10 pointer-events-none fade-right"
-    ></div>
-    <div 
-      className="absolute top-0 left-0 bottom-0 w-20 z-10 pointer-events-none fade-left"
-    ></div>
-
-    {/* الشريط المتحرك */}
-    <div className="flex gap-5 animate-marquee-horizontal">
-      {[...sortedArticles.slice(10, 25), ...sortedArticles.slice(10, 25)].map((article, index) => (
-        <Link
-  key={`${article.slug}-${index}`}
-  href={`/blog/${article.slug}`}
-  className="group flex-shrink-0 w-72 rounded-2xl shadow-md hover:shadow-xl transition-all overflow-hidden bg-white dark:bg-gray-800"
-
-          style={{ backgroundColor: 'var(--card-bg)' }}
-        >
-          <div className="relative w-full h-40 overflow-hidden bg-gray-100 dark:bg-gray-700">
-            <img
-              src={article.image}
-              alt={`${article.title} - ${article.category} - نبض التقنية`}
-              title={article.title}
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
-            <span className="absolute top-3 right-3 bg-gradient-to-r from-cyan-500 to-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded-full shadow">
-              {article.category}
-            </span>
-          </div>
-
-          <div className="p-4" style={{ backgroundColor: 'var(--card-bg)' }}>
-            <h3 
-              className="text-sm font-bold group-hover:text-cyan-600 transition line-clamp-2 leading-snug mb-2 min-h-[40px]"
-              style={{ color: 'var(--text-primary)' }}
-            >
-              {article.title}
-            </h3>
-            <div className="flex items-center justify-between text-xs">
-              <span style={{ color: 'var(--text-secondary)' }}>📅 {article.date}</span>
-              <span className="text-cyan-600 font-bold">اقرأ ←</span>
-            </div>
-          </div>
-        </Link>
-      ))}
-    </div>
-  </div>
-</section>
 
 {/* ===== قسم مبادئ الإعلام الآلي ===== */}
 <section className="mb-16">
@@ -526,6 +454,105 @@ export default function Home() {
         </div>
       </Link>
     ))}
+  </div>
+</section>
+
+{/* ===== قسم صغير: نماذج + إختصارات ===== */}
+<section className="mb-16">
+  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+
+    {/* نماذج مفيدة */}
+    <Link
+      href="/lessons?section=templates"
+      className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 min-h-[180px]"
+    >
+      {/* الصورة الخلفية */}
+      <img
+        src="/images/templates/hero.jpg"
+        alt="نماذج مفيدة"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        onError={(e) => {
+          e.target.style.display = 'none';
+        }}
+      />
+
+      {/* تدرج لوني */}
+      <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 via-teal-600/80 to-cyan-600/90"></div>
+
+      {/* زخارف */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+
+      {/* المحتوى */}
+      <div className="relative h-full flex items-center justify-between p-6 md:p-8 text-white">
+        <div className="flex-1">
+          <div className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30 mb-3">
+            ✨ جديد
+          </div>
+          <h3 className="text-2xl md:text-3xl font-black mb-2 drop-shadow-lg flex items-center gap-2">
+            📄 نماذج مفيدة
+          </h3>
+          <p className="text-white/95 text-sm leading-relaxed max-w-xs mb-4">
+            قوالب جاهزة للتعديل والاستخدام في مختلف المجالات
+          </p>
+          <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-full text-xs font-bold group-hover:gap-3 transition-all">
+            <span>تصفح النماذج</span>
+            <span>←</span>
+          </span>
+        </div>
+
+        {/* أيقونة كبيرة */}
+       
+      </div>
+    </Link>
+
+    {/* إختصارات PowerPoint */}
+    <Link
+      href="/lessons?section=powerpoint"
+      className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 min-h-[180px]"
+    >
+      {/* الصورة الخلفية */}
+      <img
+        src="/images/shortcuts/hero.jpg"
+        alt="إختصارات PowerPoint"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        onError={(e) => {
+          e.target.style.display = 'none';
+        }}
+      />
+
+      {/* تدرج لوني */}
+      <div className="absolute inset-0 bg-gradient-to-br from-orange-600/90 via-red-600/80 to-pink-600/90"></div>
+
+      {/* زخارف */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+
+      {/* المحتوى */}
+      <div className="relative h-full flex items-center justify-between p-6 md:p-8 text-white">
+        <div className="flex-1">
+          <div className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30 mb-3">
+            ⌨️ اختصارات
+          </div>
+          <h3 className="text-2xl md:text-3xl font-black mb-2 drop-shadow-lg flex items-center gap-2">
+            ⌨️ إختصارات PowerPoint
+          </h3>
+          <p className="text-white/95 text-sm leading-relaxed max-w-xs mb-4">
+            جميع اختصارات لوحة المفاتيح بالصور التوضيحية
+          </p>
+          <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-full text-xs font-bold group-hover:gap-3 transition-all">
+            <span>تصفح الإختصارات</span>
+            <span>←</span>
+          </span>
+        </div>
+
+        {/* أيقونة كبيرة */}
+       
+      </div>
+    </Link>
+
   </div>
 </section>
 

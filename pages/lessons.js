@@ -5,6 +5,7 @@ import NewsTicker from '../components/NewsTicker';
 import LessonsSidebar from '../components/LessonsSidebar';
 import { LESSONS_DATA } from '../lib/lessons';
 import { POWERPOINT_SHORTCUTS, POWERPOINT_CATEGORIES } from '../lib/powerpoint/shortcuts';
+import { USEFUL_TEMPLATES, TEMPLATE_CATEGORIES } from '../lib/templates/usefulTemplates';
 
 export default function Lessons() {
   const router = useRouter();
@@ -16,6 +17,7 @@ export default function Lessons() {
   
   // حالة قسم PowerPoint
   const [selectedCategory, setSelectedCategory] = useState('الكل');
+  const [selectedTemplateCategory, setSelectedTemplateCategory] = useState('الكل');
   
   // حالة Lightbox المشتركة
   const [lightboxImage, setLightboxImage] = useState(null);
@@ -24,7 +26,7 @@ export default function Lessons() {
 useEffect(() => {
   if (router.isReady && router.query.section) {
     const section = router.query.section;
-    if (['lessons', 'powerpoint'].includes(section)) {
+    if (['lessons', 'powerpoint', 'templates'].includes(section)) {
       setActiveSection(section);
     }
   }
@@ -36,6 +38,10 @@ useEffect(() => {
   const filteredShortcuts = selectedCategory === 'الكل'
     ? POWERPOINT_SHORTCUTS
     : POWERPOINT_SHORTCUTS.filter((s) => s.category === selectedCategory);
+  
+  const filteredTemplates = selectedTemplateCategory === 'الكل'
+  ? USEFUL_TEMPLATES
+  : USEFUL_TEMPLATES.filter((t) => t.category === selectedTemplateCategory);
 
   return (
     <Layout
@@ -295,6 +301,140 @@ useEffect(() => {
   </div>
 )}
 
+
+{/* ===== قسم نماذج مفيدة ===== */}
+{activeSection === 'templates' && (
+  <div>
+    {/* Hero Templates - بصورة خلفية */}
+    <div className="relative mb-6 rounded-2xl overflow-hidden shadow-lg min-h-[140px] md:min-h-[180px]">
+      
+      {/* الصورة الخلفية */}
+      <img
+        src="/images/templates/hero.jpg"
+        alt="نماذج مفيدة"
+        loading="lazy"
+        className="absolute inset-0 w-full h-full object-cover"
+        onError={(e) => {
+          e.target.style.display = 'none';
+        }}
+      />
+
+      {/* تدرج لوني */}
+      <div className="absolute inset-0 bg-gradient-to-r from-emerald-600/85 via-teal-600/75 to-cyan-600/85"></div>
+
+      {/* زخارف */}
+      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
+      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
+
+      {/* المحتوى */}
+      <div className="relative h-full flex items-center justify-center px-6 py-8">
+        <div className="text-center text-white max-w-2xl mx-auto">
+
+          <div className="text-4xl md:text-5xl mb-3 drop-shadow-2xl">📄</div>
+
+          <h2 className="text-2xl md:text-3xl font-black mb-2 leading-tight drop-shadow-lg">
+            نماذج مفيدة
+          </h2>
+
+          <p className="text-sm md:text-base text-white/95 max-w-xl mx-auto leading-relaxed drop-shadow-lg">
+            قوالب جاهزة للتعديل والاستخدام في مختلف المجالات
+          </p>
+
+          <div className="flex items-center justify-center gap-2 mt-4">
+            <div className="w-8 h-0.5 bg-white/50 rounded-full"></div>
+            <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+            <div className="w-8 h-0.5 bg-white/50 rounded-full"></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    {/* التصنيفات */}
+    <div className="mb-6 flex items-center gap-2 flex-wrap">
+      <span className="text-sm font-bold text-gray-600 dark:text-gray-400">تصفية:</span>
+      {TEMPLATE_CATEGORIES.map((cat) => (
+        <button
+          key={cat}
+          onClick={() => setSelectedTemplateCategory(cat)}
+          className={`px-3 py-1.5 rounded-full text-xs font-bold whitespace-nowrap transition-all ${
+            selectedTemplateCategory === cat
+              ? 'bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md'
+              : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:border-emerald-300'
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
+    </div>
+
+    {/* شبكة النماذج */}
+    {filteredTemplates.length === 0 ? (
+      <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center">
+        <div className="text-6xl mb-4">📭</div>
+        <p className="text-gray-600 dark:text-gray-400">
+          لا توجد نماذج في هذا التصنيف
+        </p>
+      </div>
+    ) : (
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {filteredTemplates.map((template) => (
+          <div
+            key={template.id}
+            className="group bg-white dark:bg-gray-800 rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden border border-gray-100 dark:border-gray-700 hover:-translate-y-1"
+          >
+            {/* الصورة */}
+            <div
+              className="relative w-full aspect-[4/3] overflow-hidden bg-gray-100 dark:bg-gray-700 cursor-zoom-in"
+              onClick={() => setLightboxImage(template.image)}
+            >
+              <img
+                src={template.image}
+                alt={template.title}
+                loading="lazy"
+                className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/600x450/10b981/ffffff?text=' + encodeURIComponent(template.title);
+                }}
+              />
+              <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                <span className="text-white text-3xl opacity-0 group-hover:opacity-100 transition-opacity">🔍</span>
+              </div>
+              <span className="absolute top-3 right-3 bg-gradient-to-r from-emerald-500 to-teal-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg">
+                {template.category}
+              </span>
+            </div>
+
+            {/* المحتوى */}
+            <div className="p-4">
+              <h3 className="font-bold text-gray-900 dark:text-white text-base group-hover:text-emerald-600 transition mb-1">
+                {template.title}
+              </h3>
+              {template.description && (
+                <p className="text-xs text-gray-500 dark:text-gray-400 mb-3">
+                  {template.description}
+                </p>
+              )}
+
+              {/* زر التنزيل */}
+              {template.fileUrl && (
+                <a
+                  href={template.fileUrl}
+                  download
+                  onClick={(e) => e.stopPropagation()}
+                  className="inline-flex items-center gap-2 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white text-xs font-bold px-4 py-2 rounded-full transition shadow-md hover:shadow-lg"
+                >
+                  <span>⬇️</span>
+                  <span>تحميل النموذج</span>
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+)}
           </main>
         </div>
 

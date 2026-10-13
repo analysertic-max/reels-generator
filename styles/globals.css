@@ -203,21 +203,5 @@ header + .h-20 {
   display: none;
 }
 
-/* حركة السلايدر من اليمين إلى اليسار */
-@keyframes marquee-horizontal {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(-50%);
-  }
-}
-
-.animate-marquee-horizontal {
-  /* 60 ثانية للدورة الكاملة - يمكن تعديلها */
-  animation: marquee-horizontal 60s linear infinite;
-  width: max-content;
-}
-
 
 

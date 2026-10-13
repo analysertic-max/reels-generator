@@ -82,23 +82,7 @@ export default function Varied() {
           </div>
         </section>
 
-        {/* ===== التصنيفات الفرعية ===== */}
-        {categories.length > 0 && (
-          <div className="mb-6 flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-bold text-gray-600">تصفية:</span>
-            <span className="px-3 py-1.5 rounded-full text-xs font-bold bg-gradient-to-r from-pink-500 to-rose-600 text-white shadow">
-              الكل
-            </span>
-            {categories.map((cat) => (
-              <span
-                key={cat}
-                className="px-3 py-1.5 rounded-full text-xs font-bold bg-white text-gray-700 border border-gray-200"
-              >
-                {cat}
-              </span>
-            ))}
-          </div>
-        )}
+     
 
         {/* ===== Grid + Sidebar ===== */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">

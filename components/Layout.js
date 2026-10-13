@@ -57,6 +57,7 @@ const navLinks = [
   dropdown: [
     { href: '/lessons?section=lessons', label: 'مبادئ أولية في الإعلام الآلي',  },
     { href: '/lessons?section=powerpoint', label: 'إختصارات برنامج PowerPoint',  },
+     { href: '/lessons?section=templates', label: 'نماذج مفيدة',  },
   ]
 },
   { href: '/about', label: 'من نحن',  },
