@@ -6,6 +6,7 @@ import Layout from '../components/Layout';
 import NewsTicker from '../components/NewsTicker';
 import TrendingTabs from '../components/TrendingTabs';
 import { blogArticlesList } from '../lib/blogData';
+import EducationMarquee from '../components/EducationMarquee';
 
 export default function Home() {
  const [activeSlide, setActiveSlide] = useState(0);
@@ -128,6 +129,8 @@ export default function Home() {
     </div>
   </div>
 </section>
+
+
 
       {/* ===== باقي المحتوى (محدود العرض) ===== */}
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -457,99 +460,121 @@ export default function Home() {
   </div>
 </section>
 
-{/* ===== قسم صغير: نماذج + إختصارات ===== */}
+
+
+{/* ===== قسم المنصة التعليمية - عريض ===== */}
 <section className="mb-16">
-  <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+  <div className="flex items-center justify-between mb-6">
+    <div className="flex items-center gap-3">
+      <span className="w-1.5 h-8 bg-gradient-to-b from-indigo-500 to-purple-600 rounded-full"></span>
+      <h2 className="text-2xl md:text-3xl font-black text-gray-900 dark:text-white">
+         المنصة التعليمية
+      </h2>
+    </div>
+  </div>
+
+  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    
+    {/* PowerPoint */}
+    <Link
+      href="/lessons?section=powerpoint"
+      className="group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 h-64"
+    >
+      <img
+        src="/images/shortcuts/hero.jpg"
+        alt="PowerPoint"
+        className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+        onError={(e) => { e.target.style.display = 'none'; }}
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-orange-900/95 via-orange-800/60 to-transparent"></div>
+      
+      {/* شارة */}
+      <span className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">
+        ⌨️ اختصارات
+      </span>
+
+      <div className="absolute bottom-0 right-0 left-0 p-6 text-white">
+        <div className="flex items-end justify-between">
+          <div>
+            <h3 className="text-xl md:text-2xl font-black mb-1 drop-shadow-lg">
+              إختصارات PowerPoint
+            </h3>
+            <p className="text-white/80 text-xs">اختصارات لوحة المفاتيح</p>
+          </div>
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </Link>
 
     {/* نماذج مفيدة */}
     <Link
       href="/lessons?section=templates"
-      className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 min-h-[180px]"
+      className="group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 h-64"
     >
-      {/* الصورة الخلفية */}
       <img
         src="/images/templates/hero.jpg"
-        alt="نماذج مفيدة"
-        loading="lazy"
+        alt="نماذج"
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        onError={(e) => {
-          e.target.style.display = 'none';
-        }}
+        onError={(e) => { e.target.style.display = 'none'; }}
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-emerald-900/95 via-emerald-800/60 to-transparent"></div>
+      
+      <span className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">
+        ✨ جديد
+      </span>
 
-      {/* تدرج لوني */}
-      <div className="absolute inset-0 bg-gradient-to-br from-emerald-600/90 via-teal-600/80 to-cyan-600/90"></div>
-
-      {/* زخارف */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
-
-      {/* المحتوى */}
-      <div className="relative h-full flex items-center justify-between p-6 md:p-8 text-white">
-        <div className="flex-1">
-          <div className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30 mb-3">
-            ✨ جديد
+      <div className="absolute bottom-0 right-0 left-0 p-6 text-white">
+        <div className="flex items-end justify-between">
+          <div>
+            <h3 className="text-xl md:text-2xl font-black mb-1 drop-shadow-lg">
+              نماذج مفيدة
+            </h3>
+            <p className="text-white/80 text-xs">قوالب جاهزة للتعديل</p>
           </div>
-          <h3 className="text-2xl md:text-3xl font-black mb-2 drop-shadow-lg flex items-center gap-2">
-            📄 نماذج مفيدة
-          </h3>
-          <p className="text-white/95 text-sm leading-relaxed max-w-xs mb-4">
-            قوالب جاهزة للتعديل والاستخدام في مختلف المجالات
-          </p>
-          <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-full text-xs font-bold group-hover:gap-3 transition-all">
-            <span>تصفح النماذج</span>
-            <span>←</span>
-          </span>
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </div>
         </div>
-
-        {/* أيقونة كبيرة */}
-       
       </div>
     </Link>
 
-    {/* إختصارات PowerPoint */}
+    {/* سلسلة Excel */}
     <Link
-      href="/lessons?section=powerpoint"
-      className="group relative overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 min-h-[180px]"
+      href="/lessons?section=excel"
+      className="group relative overflow-hidden rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 h-64"
     >
-      {/* الصورة الخلفية */}
       <img
-        src="/images/shortcuts/hero.jpg"
-        alt="إختصارات PowerPoint"
-        loading="lazy"
+        src="/images/excel/hero.jpg"
+        alt="Excel"
         className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
-        onError={(e) => {
-          e.target.style.display = 'none';
-        }}
+        onError={(e) => { e.target.style.display = 'none'; }}
       />
+      <div className="absolute inset-0 bg-gradient-to-t from-green-900/95 via-green-800/60 to-transparent"></div>
+      
+      <span className="absolute top-4 right-4 bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30">
+        📊 دروس
+      </span>
 
-      {/* تدرج لوني */}
-      <div className="absolute inset-0 bg-gradient-to-br from-orange-600/90 via-red-600/80 to-pink-600/90"></div>
-
-      {/* زخارف */}
-      <div className="absolute top-0 right-0 w-48 h-48 bg-white/10 rounded-full filter blur-3xl"></div>
-      <div className="absolute bottom-0 left-0 w-48 h-48 bg-yellow-300/20 rounded-full filter blur-3xl"></div>
-
-      {/* المحتوى */}
-      <div className="relative h-full flex items-center justify-between p-6 md:p-8 text-white">
-        <div className="flex-1">
-          <div className="inline-block bg-white/20 backdrop-blur-md text-white text-[10px] font-bold px-3 py-1 rounded-full border border-white/30 mb-3">
-            ⌨️ اختصارات
+      <div className="absolute bottom-0 right-0 left-0 p-6 text-white">
+        <div className="flex items-end justify-between">
+          <div>
+            <h3 className="text-xl md:text-2xl font-black mb-1 drop-shadow-lg">
+              سلسلة Excel
+            </h3>
+            <p className="text-white/80 text-xs">دروس شاملة لتعلم Excel</p>
           </div>
-          <h3 className="text-2xl md:text-3xl font-black mb-2 drop-shadow-lg flex items-center gap-2">
-            ⌨️ إختصارات PowerPoint
-          </h3>
-          <p className="text-white/95 text-sm leading-relaxed max-w-xs mb-4">
-            جميع اختصارات لوحة المفاتيح بالصور التوضيحية
-          </p>
-          <span className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 px-4 py-2 rounded-full text-xs font-bold group-hover:gap-3 transition-all">
-            <span>تصفح الإختصارات</span>
-            <span>←</span>
-          </span>
+          <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-md flex items-center justify-center group-hover:scale-110 transition-transform">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
+              <polyline points="15 18 9 12 15 6" />
+            </svg>
+          </div>
         </div>
-
-        {/* أيقونة كبيرة */}
-       
       </div>
     </Link>
 

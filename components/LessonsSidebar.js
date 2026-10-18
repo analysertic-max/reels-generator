@@ -20,6 +20,14 @@ const menuItems = [
     color: 'from-orange-500 to-red-500',
     activeColor: 'from-orange-500 to-red-500',
   },
+    {
+    key: 'excel',
+    title: 'سلسلة برنامج Excel',
+    description: 'دروس شاملة لتعلم Excel',
+    icon: '📊',
+    color: 'from-green-600 to-emerald-600',
+    activeColor: 'from-green-600 to-emerald-600',
+  },
   {
     key: 'templates',
     title: 'نماذج مفيدة',

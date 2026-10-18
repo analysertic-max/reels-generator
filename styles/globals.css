@@ -203,5 +203,24 @@ header + .h-20 {
   display: none;
 }
 
+/* ===== Vertical Marquee (الشريط العمودي) ===== */
 
+@keyframes marquee-vertical {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-33.333333%);
+  }
+}
+
+.animate-marquee-vertical {
+  animation: marquee-vertical 40s linear infinite;
+  will-change: transform;
+}
+
+/* إيقاف عند التمرير */
+.animate-marquee-vertical:hover {
+  animation-play-state: paused;
+}
 
